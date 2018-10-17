@@ -17,4 +17,7 @@ public class CarDealership {
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Address.class)
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @Column(name = "name")
+    private String name;
 }
