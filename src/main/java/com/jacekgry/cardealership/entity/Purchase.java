@@ -8,7 +8,6 @@ import java.util.Date;
 @Table(name = "purchases")
 public class Purchase {
 
-    @Column(name = "purchase_id")
     @Id
     private int id;
 
@@ -31,4 +30,15 @@ public class Purchase {
     @Column
     private BigDecimal price;
 
+    @Override
+    public String toString() {
+        return "Purchase{" +
+                "id=" + id +
+                ", car=" + car +
+                ", customer=" + customer +
+                ", carDealership=" + carDealership +
+                ", purchaseDate=" + purchaseDate +
+                ", price=" + price +
+                '}';
+    }
 }

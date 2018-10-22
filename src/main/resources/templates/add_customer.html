@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org>">
+<head>
+    <meta charset="UTF-8">
+    <title>Add customer</title>
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/add/customer}" th:object="${customer}" method="post">
+    <p>Id: <input type="text" th:field="*{id}" /></p>
+    <p>First name: <input type="text" th:field="*{firstName}" /></p>
+    <p>Last name: <input type="text" th:field="*{lastName}" /></p>
+    <p>Last name: <input type="text" th:field="*{email}" /></p>
+    <!--<p>Address id: <input type="text" th:value=""/></p>-->
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    <select th:field="*{address}" class="form-control">
+        <option th:each="address: ${addresses}" th:value="${address.id}" th:text="${address.country}" />
+    </select>
+</form>
+</body>
+</html>

@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Data
 public class CarDealership {
 
-    @Column(name = "car_dealership_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

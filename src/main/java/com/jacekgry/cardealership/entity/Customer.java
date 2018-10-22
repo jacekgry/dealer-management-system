@@ -3,6 +3,7 @@ package com.jacekgry.cardealership.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "customers")
@@ -22,4 +23,7 @@ public class Customer {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Email
+    private String email;
 }

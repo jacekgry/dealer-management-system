@@ -5,14 +5,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+@Table (name = "repairs")
 public class Repair {
 
-    @Column(name = "purchase_id")
     @Id
     private int id;
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Car.class)
-    @JoinColumn(name = "car_id")
     private Car car;
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Customer.class)

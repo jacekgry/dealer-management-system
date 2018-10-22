@@ -19,7 +19,6 @@ public class CarController {
 
     @GetMapping("/allCars")
     public List<Car> allCars() {
-        Car car = Car.builder().id(2).build();
         return carService.findAll();
     }
 }

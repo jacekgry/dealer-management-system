@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,4 +18,17 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }
+
+    @Override
+    public Customer saveCustomer(Customer customer) {
+        Customer c = customerRepository.save(customer);
+        return c;
+    }
+
+    @Override
+    public Optional<Customer> findById(int id) {
+        return customerRepository.findById(id);
+    }
+
+
 }
