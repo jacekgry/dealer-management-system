@@ -20,7 +20,6 @@ public class PurchasesController {
     public String customerPurchases(Model model, @PathVariable Integer id){
         List<Purchase> purchases = purchaseService.findCustomerPurchases(id);
         model.addAttribute("purchases", purchases);
-        System.out.println(purchases);
         return "purchases";
     }
 }
