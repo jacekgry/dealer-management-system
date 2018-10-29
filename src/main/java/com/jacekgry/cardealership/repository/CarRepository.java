@@ -9,4 +9,5 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 
     List<Car> findByName(String name);
     List<Car> findAll();
+    Integer deleteById(int id);
 }

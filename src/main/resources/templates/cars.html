@@ -14,19 +14,28 @@
         <table class="table table-striped" border="1">
 
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
+                <th>Release date</th>
+                <th>Engine displacement</th>
                 <th>Details</th>
             </tr>
 
             <tr th:each="car : ${cars}">
-                <td th:utext="${car.}"></td>
-                <td th:utext="${customer.lastName}"></td>
-                <td><a th:href="${'/customer/' + customer.id}"/>View</td>
+                <td th:utext="${car.name}"></td>
+                <td th:utext="${car.releaseDate}"></td>
+                <td><a th:href="${'/car/' + car.id}"/>View</td>
+                <td><a th:href="${'/delete/car/' + car.id}"/>Delete</td>
             </tr>
 
         </table>
     </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/add/car'}" role="button" class="btn btn-success">Add car</a>
+        </div>
+    </div>
+
+
 </div>
 </body>
 </html>

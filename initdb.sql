@@ -18,7 +18,7 @@ create or replace table fuels (
 );
 
 create or replace table cars (
-	id int not null primary key,
+	id int not null primary key auto_increment,
 	name varchar(50) not null,
 	engine_displacement decimal(4,2) not null,
 	acceleration decimal (4,2) not null,
@@ -86,8 +86,10 @@ create or replace table stock (
 select * from customers;
 select * from cars;
 
+insert into fuels values(1, "petrol");
+insert into fuels values(2, "diesel");
+insert into fuels values(3, "autogas");
 insert into customers values (1, "john", "travolta", "aaaa@dasda.pl", "123321123");
-insert into cars values (1, "Renault Laguna", "2010-09-09", "asdsadasd", 123.31);
+insert into cars values (1,"Renault Laguna",1.2, 12, 1, "2010-09-09", "asdsadasd", 123.31);
 insert into car_dealerships values(1, "car dealership no 1", "Warsaw", "Slowackiego", "12", "21-123", "123321123");
 insert into purchases values(1, 1, 1, 1, "2010-02-04", 4542.21);
-insert into fuels values(1, "petrol")
