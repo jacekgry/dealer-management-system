@@ -30,5 +30,10 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id);
     }
 
+    @Override
+    public Integer deleteById(int id) {
+        return customerRepository.deleteById(id);
+    }
+
 
 }

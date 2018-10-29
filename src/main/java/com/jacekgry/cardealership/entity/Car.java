@@ -9,7 +9,6 @@ import java.util.Date;
 
 @Entity
 @Data
-@Builder
 @Table(name = "cars")
 public class Car {
 

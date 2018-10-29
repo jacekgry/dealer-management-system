@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface CustomerService {
     List<Customer> findAll();
     Customer saveCustomer(Customer customer);
-
     Optional<Customer> findById(int id);
+    Integer deleteById(int id);
 }

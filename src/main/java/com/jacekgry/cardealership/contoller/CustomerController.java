@@ -1,8 +1,6 @@
 package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Customer;
-import com.jacekgry.cardealership.entity.Purchase;
-import com.jacekgry.cardealership.service.AddressService;
 import com.jacekgry.cardealership.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -19,7 +16,6 @@ import java.util.Optional;
 public class CustomerController {
 
     private final CustomerService customerService;
-    private final AddressService addressService;
 
     @GetMapping("/all/customers")
     public String allCustomers(Model model) {
@@ -30,12 +26,11 @@ public class CustomerController {
     @PostMapping("/add/customer")
     public String addCustomerSubmit(@ModelAttribute Customer customer) {
         customerService.saveCustomer(customer);
-        return "customers";
+        return "redirect:/all/customers";
     }
 
     @GetMapping("/add/customer")
     public String addCustomerForm(@ModelAttribute Customer customer, Model model) {
-        model.addAttribute("addresses", addressService.findAll());
         return "add_customer";
     }
 
@@ -48,7 +43,11 @@ public class CustomerController {
         return "customer";
     }
 
-
+    @GetMapping("delete/customer/{id}")
+    public String deleteCustomer(@PathVariable Integer id){
+        customerService.deleteById(id);
+        return "redirect:/all/customers";
+    }
 
 
     @ExceptionHandler(CustomerNotFoundException.class)

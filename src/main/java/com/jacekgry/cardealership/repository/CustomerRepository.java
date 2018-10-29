@@ -16,5 +16,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     List<Customer> findByLastName(String lastName);
 
-
+    Integer deleteById(int id);
 }

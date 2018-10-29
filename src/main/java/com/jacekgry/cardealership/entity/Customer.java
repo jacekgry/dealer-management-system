@@ -14,10 +14,6 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Address.class)
-    @JoinColumn(name = "address_id")
-    private Address address;
-
     @Column(name = "first_name")
     private String firstName;
 
@@ -26,4 +22,7 @@ public class Customer {
 
     @Email
     private String email;
+
+    private String phone;
+
 }

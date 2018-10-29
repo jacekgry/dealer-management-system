@@ -1,0 +1,34 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbarinclude" style="margin: 10px">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/home') ? 'active':''}"
+                class="nav-items">
+                <a th:href="${'/home'}" class="nav-link" href="#">Home</a>
+            </li>
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/all/cardealerships') ? 'active':''}"
+                class="nav-item">
+                <a th:href="${'/all/cardealerships'}" class="nav-link" href="#">Car dealerships</a>
+            </li>
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/all/customers') ? 'active':''}"
+                class="nav-item">
+                <a th:href="${'/all/customers'}" class="nav-link" href="#">Customers</a>
+            </li>
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/all/cars') ? 'active':''}"
+                class="nav-item">
+                <a th:href="${'/all/cars'}" class="nav-link" href="#">Cars</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+</html>

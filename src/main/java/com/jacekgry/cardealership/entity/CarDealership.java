@@ -13,10 +13,19 @@ public class CarDealership {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Address.class)
-    @JoinColumn(name = "address_id")
-    private Address address;
-
-    @Column(name = "name")
     private String name;
+
+    private String city;
+
+    private String street;
+
+    @Column(name = "building_number")
+    private String buildingNumber;
+
+    @Column
+    private String phone;
+
+
+
+
 }
