@@ -17,4 +17,9 @@ public class CarDealershipServiceImpl implements CarDealerShipService {
     public List<CarDealership> findAll() {
         return carDealershipRepository.findAll();
     }
+
+    @Override
+    public CarDealership save(CarDealership carDealership) {
+        return carDealershipRepository.save(carDealership);
+    }
 }
