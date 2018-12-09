@@ -38,7 +38,7 @@ public class PurchasesController {
         return "redirect:/purchases";
     }
 
-    @PostMapping
+    @PostMapping("/add/purchase")
     public String newPurchaseForm(Model model){
         model.addAttribute("purchase", new Purchase());
         return "add_purchase";
