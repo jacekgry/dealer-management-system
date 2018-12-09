@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,4 +24,24 @@ public class PurchasesController {
         model.addAttribute("purchases", purchases);
         return "purchases";
     }
+
+    @GetMapping("/purchases")
+    public String findPurchases(Model model, String phraseSearch){
+        List<Purchase> purchases = purchaseService.findByPhraseSearch(phraseSearch);
+        model.addAttribute("purchases", purchases);
+        return "purchases";
+    }
+
+    @PostMapping("/delete/purchase")
+    public String deletePurchase(@RequestParam Integer id){
+        purchaseService.deleteById(id);
+        return "redirect:/purchases";
+    }
+
+    @PostMapping
+    public String newPurchaseForm(Model model){
+        model.addAttribute("purchase", new Purchase());
+        return "add_purchase";
+    }
+
 }

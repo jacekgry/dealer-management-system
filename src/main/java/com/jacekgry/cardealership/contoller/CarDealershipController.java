@@ -15,7 +15,7 @@ public class CarDealershipController {
 
     private final CarDealerShipService carDealerShipService;
 
-    @GetMapping("all/cardealerships")
+    @GetMapping("/cardealerships")
     public String allCardealerships(Model model) {
         model.addAttribute("cardealerships", carDealerShipService.findAll());
         return "cardealerships";
@@ -30,8 +30,6 @@ public class CarDealershipController {
     @PostMapping("add/cardealership")
     public String addCarDealershipSubmit(@ModelAttribute CarDealership carDealership) {
         carDealerShipService.save(carDealership);
-        return "redirect:/all/cardealerships";
+        return "redirect:/cardealerships";
     }
-
-
 }

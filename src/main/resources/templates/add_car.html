@@ -14,16 +14,11 @@
     <div th:replace="navbar::navbarinclude"></div>
     <h1>Add car</h1>
 
-    <form action="#" th:action="@{/add/car}" th:object="${car}" method="post">
+    <form action="#" th:action="@{/add/car}" th:object="${car}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="nameInput">Name:</label>
             <input type="text" id="nameInput" class="form-control col-sm-10" th:field="*{name}">
-        </div>
-
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="rdInput">Release date:</label>
-            <input type="date" id="rdInput" class="form-control col-sm-2" th:field="*{releaseDate}">
         </div>
 
         <div class="form-group row">
@@ -33,7 +28,7 @@
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="accInput">0-100 km/h acceleration::</label>
-            <input type="text" id="accInput" class="form-control col-sm-2" th:field="*{acceleration}">
+            <input type="text" id="accInput" class="form-control col-sm-2" th:field="*{time0to100kmph}">
         </div>
 
         <div class="form-group row">
@@ -48,9 +43,15 @@
 
         <div class="row">
             <label class="col-sm-2">Fuel type: </label><select th:field="*{fuel}" class="form-control col-sm-3">
-            <option th:each="fuel: ${fuels}" th:value="${fuel.id}" th:text="${fuel.name}"/>
+            <option th:each="fuel: ${fuels}" th:value="${fuel}" th:text="${fuel}"/>
         </select>
         </div>
+
+        <!--<div class="form-group row">-->
+            <!--<label class="col-sm-2 col-form-label">Image: </label>-->
+            <!--<input type="file" name ="img">-->
+        <!--</div>-->
+
 
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
 

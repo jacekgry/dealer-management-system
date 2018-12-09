@@ -1,4 +1,8 @@
-package com.jacekgry.cardealership;
+package com.jacekgry.cardealership.utils;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class Utils {
+
 }

@@ -12,23 +12,29 @@
                 class="nav-items">
                 <a th:href="${'/home'}" class="nav-link" href="#">Home</a>
             </li>
-            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/all/cardealerships') ? 'active':''}"
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/cardealerships') ? 'active':''}"
                 class="nav-item">
-                <a th:href="${'/all/cardealerships'}" class="nav-link" href="#">Car dealerships</a>
+                <a th:href="${'/cardealerships'}" class="nav-link" href="#">Car dealerships</a>
             </li>
-            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/all/customers') ? 'active':''}"
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/customers') ? 'active':''}"
                 class="nav-item">
-                <a th:href="${'/all/customers'}" class="nav-link" href="#">Customers</a>
+                <a th:href="${'/customers'}" class="nav-link" href="#">Customers</a>
             </li>
-            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/all/cars') ? 'active':''}"
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/cars') ? 'active':''}"
                 class="nav-item">
-                <a th:href="${'/all/cars'}" class="nav-link" href="#">Cars</a>
+                <a th:href="${'/cars'}" class="nav-link" href="#">Cars</a>
             </li>
+            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/cars') ? 'active':''}"
+                class="nav-item">
+                <a th:href="${'/purchases'}" class="nav-link" href="#">Purchases</a>
+            </li>
+
+
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <!--<form class="form-inline my-2 my-lg-0">-->
+            <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+        <!--</form>-->
     </div>
 </nav>
 </html>

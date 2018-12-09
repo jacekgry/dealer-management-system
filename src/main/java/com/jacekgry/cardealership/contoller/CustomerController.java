@@ -17,7 +17,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @GetMapping("/all/customers")
+    @GetMapping("/customers")
     public String allCustomers(Model model) {
         model.addAttribute("customers", customerService.findAll());
         return "customers";
@@ -26,7 +26,8 @@ public class CustomerController {
     @PostMapping("/add/customer")
     public String addCustomerSubmit(@ModelAttribute Customer customer) {
         customerService.saveCustomer(customer);
-        return "redirect:/all/customers";
+
+        return "redirect:/customers";
     }
 
     @GetMapping("/add/customer")
@@ -46,9 +47,16 @@ public class CustomerController {
     @GetMapping("delete/customer/{id}")
     public String deleteCustomer(@PathVariable Integer id){
         customerService.deleteById(id);
-        return "redirect:/all/customers";
+        return "redirect:/customers";
     }
 
+    @GetMapping("edit/customer/{id}")
+    public String editCustomer(@PathVariable Integer id, Model model){
+        Customer customer = customerService.findById(id).get();  //TODO
+        model.addAttribute("customer", customer);
+
+        return "add_customer";
+    }
 
     @ExceptionHandler(CustomerNotFoundException.class)
     public ModelAndView handleCustomerNotFoundException(CustomerNotFoundException e) {
