@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org>">
 <head>
     <meta charset="UTF-8">
-    <title>Add car</title>
+    <title>New purchase</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
           rel="stylesheet">
@@ -18,18 +18,30 @@
         <input type="hidden" th:field="*{id}">
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="customerInput">Customer:</label>
-            <input type="text" id="customerInput" class="form-control col-sm-10" th:field="*{customer}">
+            <label class="col-sm-2 col-form-label">Customer:</label>
+            <select th:field="*{customer}"
+                    class="form-control col-sm-3">
+                <option th:each="customer: ${customers}" th:value="${customer.id}"
+                        th:text="${customer.firstName} + ' ' + ${customer.lastName}"/>
+            </select>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="carInput">Engine displacement:</label>
-            <input type="text" id="carInput" class="form-control col-sm-2" th:field="*{car}">
+            <label class="col-sm-2 col-form-label">Car:</label>
+            <select th:field="*{car}"
+                    class="form-control col-sm-3">
+                <option th:each="car: ${cars}" th:value="${car.id}"
+                        th:text="${car.name}"/>
+            </select>
+            </select>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="cdInput">0-100 km/h acceleration::</label>
-            <input type="text" id="cdInput" class="form-control col-sm-2" th:field="*{carDealership}">
+            <label class="col-sm-2" col-form-label>Where did he buy it: </label><select th:field="*{carDealership}"
+                                                                                        class="form-control col-sm-3">
+            <option th:each="cardealership: ${cardealerships}" th:value="${cardealership.id}"
+                    th:text="${cardealership.name}"/>
+        </select>
         </div>
 
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>

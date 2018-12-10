@@ -1,6 +1,9 @@
 package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Purchase;
+import com.jacekgry.cardealership.service.CarDealerShipService;
+import com.jacekgry.cardealership.service.CarService;
+import com.jacekgry.cardealership.service.CustomerService;
 import com.jacekgry.cardealership.service.PurchaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,9 @@ import java.util.List;
 public class PurchasesController {
 
     private PurchaseService purchaseService;
+    private CarDealerShipService carDealerShipService;
+    private CarService carService;
+    private CustomerService customerService;
 
     @GetMapping("/customer/purchases/{id}")
     public String customerPurchases(Model model, @PathVariable Integer id){
@@ -38,8 +44,11 @@ public class PurchasesController {
         return "redirect:/purchases";
     }
 
-    @PostMapping("/add/purchase")
+    @GetMapping("/add/purchase")
     public String newPurchaseForm(Model model){
+        model.addAttribute("cardealerships", carDealerShipService.findAll());
+        model.addAttribute("cars", carService.findAll());
+        model.addAttribute("customers", customerService.findAll());
         model.addAttribute("purchase", new Purchase());
         return "add_purchase";
     }
