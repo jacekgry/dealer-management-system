@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -31,5 +32,12 @@ public class CarDealershipController {
     public String addCarDealershipSubmit(@ModelAttribute CarDealership carDealership) {
         carDealerShipService.save(carDealership);
         return "redirect:/cardealerships";
+    }
+
+    @GetMapping("/cardealership/{id}")
+    public String showCarDealership(@PathVariable int id, Model model){
+        CarDealership carDealership = carDealerShipService.findById(id);
+        model.addAttribute("cardealership", carDealership);
+        return "cardealership";
     }
 }

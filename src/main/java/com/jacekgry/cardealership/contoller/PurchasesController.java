@@ -8,10 +8,7 @@ import com.jacekgry.cardealership.service.PurchaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,6 +48,20 @@ public class PurchasesController {
         model.addAttribute("customers", customerService.findAll());
         model.addAttribute("purchase", new Purchase());
         return "add_purchase";
+    }
+
+    @PostMapping("/add/purchase")
+    public String newPurchaseSubmit(@ModelAttribute Purchase purchase){
+        purchase.setPrice(purchase.getCar().getPrice());
+        purchaseService.save(purchase);
+        return "redirect:/purchases";
+    }
+
+    @GetMapping("/purchase/{id}")
+    public String showPurchaseDetails(@PathVariable int id, Model model){
+        Purchase purchase = purchaseService.findById(id);
+        model.addAttribute("purchase", purchase);
+        return "purchase";
     }
 
 }

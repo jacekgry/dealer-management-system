@@ -31,7 +31,4 @@ public class CarDealership {
 
     @Email
     private String email;
-
-
-
 }

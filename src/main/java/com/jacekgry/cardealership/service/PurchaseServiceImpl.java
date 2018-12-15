@@ -41,4 +41,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     public void save(Purchase purchase) {
         purchaseRepository.save(purchase);
     }
+
+    @Override
+    public Purchase findById(int id) {
+        return purchaseRepository.findById(id).get();
+    }
 }

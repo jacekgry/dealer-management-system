@@ -22,4 +22,9 @@ public class CarDealershipServiceImpl implements CarDealerShipService {
     public CarDealership save(CarDealership carDealership) {
         return carDealershipRepository.save(carDealership);
     }
+
+    @Override
+    public CarDealership findById(int id) {
+        return carDealershipRepository.findById(id).get();
+    }
 }

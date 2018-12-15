@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div th:replace="navbar::navbarinclude"></div>
+    <div class="container">
+        <form class="form-horizontal">
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Id: </label>
+                <div class="col-sm-10"><p th:text="${purchase.id}" class="form-control-static"></p></div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Car: </label>
+                <div class="col-sm-10"><a th:href="${'/car/' + purchase.car.id}" th:text="${purchase.car.name}" class="form-control-static"></a></div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Customer: </label>
+                <div class="col-sm-10"><a th:href="${'/customer/' + purchase.customer.id}" th:text="${purchase.customer.firstName + ' ' + purchase.customer.lastName}" class="form-control-static"></a></div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Car dealership: </label>
+                <div class="col-sm-10"><a th:href="${'/cardealership/' + purchase.carDealership.id}" th:text="${purchase.carDealership.name}" class="form-control-static"></a></div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Price</label>
+                <div class="col-sm-10"><p th:text="${purchase.price}" class="form-control-static"></p></div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2">Date: </label>
+                <div class="col-sm-10"><p th:text="${purchase.purchaseDate}" class="form-control-static"></p></div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
