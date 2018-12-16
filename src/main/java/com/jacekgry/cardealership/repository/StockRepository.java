@@ -8,8 +8,9 @@ import java.util.Optional;
 
 public interface StockRepository extends JpaRepository<Stock, Integer> {
 
-    List<Stock> findAllByIdCarDealershipId(int carDealerShipId);
-    List<Stock> findAllByIdCarId(int carId);
-    Optional<Stock> findByIdCarIdAndIdCarDealershipId(int carId, int carDealershipId);
+    List<Stock> findAllByStockIdCarDealershipId(int carDealerShipId);
+
+    List<Stock> findAllByStockIdCarId(int carId);
+    Optional<Stock> findByStockIdCarIdAndStockIdCarDealershipId(int carId, int carDealershipId);
 
 }

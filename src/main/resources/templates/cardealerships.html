@@ -10,6 +10,11 @@
 <body>
 <div class="container">
     <div th:replace="navbar::navbarinclude"></div>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/add/cardealership'}" role="button" class="btn btn-success">Add cardealership</a>
+        </div>
+    </div>
     <div>
         <table class="table table-striped" border="1">
 
@@ -17,21 +22,25 @@
                 <th>Name</th>
                 <th>City</th>
                 <th>Details</th>
+                <th>Delete</th>
             </tr>
 
             <tr th:each="cardealership : ${cardealerships}">
                 <td th:utext="${cardealership.name}"></td>
                 <td th:utext="${cardealership.city}"></td>
                 <td><a th:href="${'/cardealership/' + cardealership.id}"/>View</td>
+                <td>
+                    <form method="POST" th:action="@{/delete/cardealership}">
+                        <input type="hidden" name="id" th:value="${cardealership.id}"/>
+                        <button type="submit" name="submit" value="value" class="link-button">Delete</button>
+                    </form>
+                </td>
             </tr>
+
 
         </table>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <a th:href="${'/add/cardealership'}" role="button" class="btn btn-success">Add cardealership</a>
-        </div>
-    </div>
+
 
 </div>
 </body>

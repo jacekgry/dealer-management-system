@@ -1,7 +1,7 @@
 package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Purchase;
-import com.jacekgry.cardealership.service.CarDealerShipService;
+import com.jacekgry.cardealership.service.CarDealershipService;
 import com.jacekgry.cardealership.service.CarService;
 import com.jacekgry.cardealership.service.CustomerService;
 import com.jacekgry.cardealership.service.PurchaseService;
@@ -17,7 +17,7 @@ import java.util.List;
 public class PurchasesController {
 
     private PurchaseService purchaseService;
-    private CarDealerShipService carDealerShipService;
+    private CarDealershipService carDealerShipService;
     private CarService carService;
     private CustomerService customerService;
 

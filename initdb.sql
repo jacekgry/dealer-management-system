@@ -24,7 +24,7 @@ create or replace table cars (
 );
 
 create or replace table car_dealerships (
-	id int not null primary key,
+	id int not null primary key auto_increment,
 	name varchar(50) not null unique key,
 	city varchar(50) not null,
 	street varchar(50) not null,
@@ -35,7 +35,7 @@ create or replace table car_dealerships (
 );
 
 create or replace table purchases (
-	id int not null primary key,
+	id int not null primary key auto_increment,
 	car_id int not null,
 	customer_id int not null,
 	car_dealership_id int not null,
@@ -49,15 +49,15 @@ create or replace table purchases (
 
 
 create or replace table repairs (
-	id int not null primary key,
+	id int not null primary key auto_increment,
 	
 	car_id int not null,
 	car_dealership_id int not null,
 	customer_id int not null,
 	
-	price decimal(10, 2) not null,
+	price decimal(10, 2),
 	submission_date date not null,
-	end_date date not null,
+	end_date date,
 	customers_description varchar(300) not null,
 	mechanics_description varchar(300) not null,
 	
@@ -128,6 +128,22 @@ select * from cars;
 #select * from car_images;
 
 insert into customers values (1, "john", "travolta", "aaaa@dasda.pl", "123321123");
+insert into customers values (2, "jim", "hendrix", "aaaassdad@dasda.pl", "1321321123");
+insert into customers values (3, "george", "bush", "g@b.org", "124321123");
+insert into customers values (4, "donald", "trump", "donald@trump.com", "166621123");
+
 insert into cars values (1,"Renault Laguna",1.2, 12, 'AUTOGAS', "asdsadasd", 123.31);
+insert into cars values (2,"Skoda Octavia",1.3, 16, 'PETROL', "ggggadsdsadasd", 5523.31);
+insert into cars values (3,"Fiat 126p",1.8, 1, 'WATER', "adsadaasd", 223.31);
+
 insert into car_dealerships values(1, "car dealership no 1", "Warsaw", "Slowackiego", "12", "21-123", "123321123", "cardlrshp1@gmail.com");
+insert into car_dealerships values(2, "car dealership no 2", "Poznan", "Mickiewicza", "15", "22-223", "155555555", "cardlrshp2@gmail.com");
+
+insert into stock values (1, 1, 123);
+insert into stock values (1, 2, 444);
+insert into stock values (1, 3, 55);
+insert into stock values (2, 2, 223);
+
+
+
 insert into purchases values(1, 1, 1, 1, "2010-02-04", 4542.21);

@@ -1,6 +1,7 @@
 package com.jacekgry.cardealership.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -28,6 +29,7 @@ public class Purchase {
 
     @Column(name = "purchase_date")
     @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date purchaseDate;
 
     @Column

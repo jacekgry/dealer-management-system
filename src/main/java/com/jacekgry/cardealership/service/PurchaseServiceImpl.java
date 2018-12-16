@@ -1,5 +1,6 @@
 package com.jacekgry.cardealership.service;
 
+import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Purchase;
 import com.jacekgry.cardealership.repository.PurchaseRepository;
 import lombok.AllArgsConstructor;
@@ -45,5 +46,10 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public Purchase findById(int id) {
         return purchaseRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Purchase> findAllByCardealership(CarDealership carDealership) {
+        return purchaseRepository.findAllByCarDealership(carDealership);
     }
 }

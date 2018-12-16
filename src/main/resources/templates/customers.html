@@ -10,6 +10,11 @@
 <body>
 <div class="container">
     <div th:replace="navbar::navbarinclude"></div>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/add/customer'}" role="button" class="btn btn-success">Add customer</a>
+        </div>
+    </div>
     <div>
         <table class="table table-striped" border="1">
 
@@ -26,17 +31,16 @@
                 <td th:utext="${customer.lastName}"></td>
                 <td><a th:href="${'/customer/' + customer.id}"/>View</td>
                 <td><a th:href="${'/edit/customer/' + customer.id}"/>Edit</td>
-                <td><a th:href="${'/delete/customer/' + customer.id}"/>Delete</td>
+                <td>
+                    <form method="POST" th:action="@{/delete/customer}">
+                        <input type="hidden" name="id" th:value="${customer.id}"/>
+                        <button type="submit" name="submit" value="value" class="link-button">Delete</button>
+                    </form>
+                </td>
             </tr>
 
         </table>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <a th:href="${'/add/customer'}" role="button" class="btn btn-success">Add customer</a>
-        </div>
-    </div>
-
 </div>
 </body>
 </html>

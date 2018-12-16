@@ -32,6 +32,7 @@
                 <th>Id</th>
                 <th>Customer</th>
                 <th>Car</th>
+                <th>Date</th>
                 <th>Details</th>
                 <th>Delete</th>
             </tr>
@@ -40,13 +41,13 @@
                 <td th:utext="${purchase.id}"></td>
                 <td th:utext="${purchase.customer.firstName + ' ' + purchase.customer.lastName}"></td>
                 <td th:utext="${purchase.car.name}"></td>
+                <td th:utext="${purchase.purchaseDate}"></td>
                 <td><a th:href="${'/purchase/' + purchase.id}"/>View</td>
                 <td>
                     <form method="POST" th:action="@{/delete/purchase}">
                         <input type="hidden" name="id" th:value="${purchase.id}" />
                         <button type="submit" name="submit" value="value" class="link-button">Delete</button>
                     </form>
-                    <!--<a th:href="${'/delete/purchase/' + purchase.id}"/>Delete</td>-->
             </tr>
         </table>
     </div>

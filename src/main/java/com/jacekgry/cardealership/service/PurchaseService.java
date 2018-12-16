@@ -1,6 +1,7 @@
 package com.jacekgry.cardealership.service;
 
 
+import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Purchase;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface PurchaseService {
     void deleteById(Integer id);
     void save(Purchase purchase);
     Purchase findById(int id);
+    List<Purchase> findAllByCardealership(CarDealership carDealership);
 }

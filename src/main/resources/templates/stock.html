@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div th:replace="navbar::navbarinclude"></div>
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/add/stock'}" role="button" class="btn btn-success">Add customer</a>
+        </div>
+
+    </div>
+    <div>
+        <table class="table table-striped" border="1">
+            <tr>
+                <th>Car</th>
+                <th>Available number</th>
+            </tr>
+
+            <tr th:each="s : ${stock}">
+                <td th:utext="${s.stockId.car.name + ' [id=' + s.stockId.car.id + ']'}"></td>
+                <td>
+                    <div style="float: left" th:utext="${s.availableNumber}"></div>
+                    <div style="float: right"><a href="#" class="btn btn-info btn-lg" data-toggle="modal"
+                                                 data-target="#exampleModal"
+                                                 th:attr="data-car=${s.stockId.car.name},data-carid=${s.stockId.car.id}, data-quantity=${s.availableNumber}"><span
+                            class="glyphicon glyphicon-edit"></span></a></div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+        Open modal for @mdo
+    </button>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Set available number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form th:action="@{/cardealership/updatestock}" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <h5 class="car-name">Car:</h5>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-2 col-form-label">Quantity:</label>
+                        <input type="text" id="quantity" class="col-sm-2 form-control" th:name="quantity">
+                        <input type="hidden" th:name="cdId" th:value="${cdId}">
+                        <input type="hidden" id="carId" th:name="carId">
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!--<a class="btn btn-primary" th:action="">Save</a>-->
+                    <input type="submit" value="Submit"/>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script>
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var car = button.data('car')
+        var carId = button.data('carid')
+        var quantity = button.data('quantity')
+
+        console.log("carId=" + carId)
+        console.log("Car= " + car)
+        console.log("quantity= " + quantity )
+        var modal = $(this)
+        modal.find('.car-name').text('Car: ' + car)
+
+        document.getElementById("carId").value = carId
+        document.getElementById("quantity").value = quantity
+
+        // modal.getElementById("carId").value = carId
+    })
+</script>
+
+
+</body>
+</html>

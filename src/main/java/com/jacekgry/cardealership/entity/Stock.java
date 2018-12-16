@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 public class Stock {
 
-//    @Id
+    //    @Id
 //    @Column(name = "stock_id")
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private int id;
@@ -23,7 +23,7 @@ public class Stock {
 //    @JoinColumn(name = "car_dealership_id")
 //    private CarDealership carDealership;
     @EmbeddedId
-    private StockId id;
+    private StockId stockId;
 
     @Column(name = "available_number")
     private Integer availableNumber;
@@ -33,8 +33,10 @@ public class Stock {
 @Embeddable
 @Data
 class StockId implements Serializable {
-    @Column(name = "car_dealership_id" )
-    private int carDealershipId;
-    @Column(name = "car_id")
-    private int carId;
+    @ManyToOne(targetEntity = CarDealership.class)
+    @JoinColumn(name = "car_dealership_id")
+    private CarDealership carDealership;
+    @ManyToOne(targetEntity = Car.class)
+    @JoinColumn(name = "car_id")
+    private Car car;
 }

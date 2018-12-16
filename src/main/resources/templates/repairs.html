@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Customers</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          rel="stylesheet">
 </head>
 <body>
+<div class="container">
+    <div th:replace="navbar::navbarinclude"></div>
 
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="${'/add/repair'}" role="button" class="btn btn-success">New repair</a>
+        </div>
+        <div class="col-sm-9">
+            <form class="form-inline float-right" th:action="@{/repairs}" method="get">
+                <input class="form-control" type="search" th:name='phraseSearch' placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div>
+        <table class="table table-striped" border="1">
+
+            <tr>
+                <th>Id</th>
+                <th>Customer</th>
+                <th>Car</th>
+                <th>Submission date</th>
+                <th>End date</th>
+                <th>Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+
+            <tr th:each="repair : ${repairs}">
+                <td th:utext="${repair.id}"></td>
+                <td th:utext="${repair.customer.firstName + ' ' + repair.customer.lastName}"></td>
+                <td th:utext="${repair.car.name}"></td>
+                <td th:utext="${repair.submissionDate}"></td>
+                <td th:utext="${repair.endDate}"></td>
+                <td><a th:href="${'/repair/' + repair.id}"/>View</td>
+                <td><a th:href="${'/edit/repair/' + repair.id}"/>Edit</td>
+                <td>
+                    <form method="POST" th:action="@{/delete/repair}">
+                        <input type="hidden" name="id" th:value="${repair.id}" />
+                        <button type="submit" name="submit" value="value" class="link-button">Delete</button>
+                    </form>
+            </tr>
+        </table>
+    </div>
+</div>
 </body>
 </html>
