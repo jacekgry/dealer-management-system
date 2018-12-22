@@ -4,7 +4,7 @@ import com.jacekgry.cardealership.entity.CarDealership;
 
 import java.util.List;
 
-public interface CarDealershipService {
+public interface CarDealerShipService {
 
     List<CarDealership> findAll();
     CarDealership save(CarDealership carDealership);
