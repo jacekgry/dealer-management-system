@@ -8,13 +8,7 @@ import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
-
-    @Override
-    List<Customer> findAll();
-
     List<Customer> findByFirstName(String firstName);
 
     List<Customer> findByLastName(String lastName);
-
-    Integer deleteById(int id);
 }

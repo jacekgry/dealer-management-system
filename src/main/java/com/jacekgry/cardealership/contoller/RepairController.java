@@ -68,4 +68,10 @@ public class RepairController {
         return "add_repair";
     }
 
+    @GetMapping("/repair/{id}")
+    public String showRepair(@PathVariable Integer id, Model model){
+        Repair repair = repairService.findById(id);
+        model.addAttribute("repair", repair);
+        return "repair";
+    }
 }

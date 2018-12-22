@@ -2,6 +2,7 @@ package com.jacekgry.cardealership.repository;
 
 import com.jacekgry.cardealership.entity.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 
 import java.math.BigDecimal;
@@ -19,7 +20,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     @Procedure(procedureName = "increase_prices")
     void increasePrices(BigDecimal percentage);
 
-    @Procedure(procedureName = "get_cars_sorted_by_repairs_purchases_ratio")
+//    @Procedure(procedureName = "get_cars_sorted_by_repairs_purchases_ratio")
+    @Query(nativeQuery = true, value = "SELECT get_cars_sorted_by_repairs_purchases_ratio()")
     String carsByRepairsPurchasesRatio();
 
 

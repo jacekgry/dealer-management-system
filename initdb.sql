@@ -54,6 +54,7 @@ create or replace table repairs (
 	car_id int not null,
 	car_dealership_id int not null,
 	customer_id int not null,
+	purchase_id int null,
 	
 	price decimal(10, 2),
 	submission_date date not null,
@@ -63,7 +64,8 @@ create or replace table repairs (
 	
 	foreign key (car_id) references cars(id),
 	foreign key (customer_id) references customers(id),
-	foreign key (car_dealership_id) references car_dealerships(id)
+	foreign key (car_dealership_id) references car_dealerships(id),
+	foreign key (purchase_id) references purchases(id)	
 );
 
 create or replace table stock (
@@ -94,23 +96,13 @@ $$$
 create or replace view cars_purchases_num as select car_id, count(*) as num_of_purchases from purchases group by car_id;
 create or replace view cars_repairs_num as select car_id, count(*) as num_of_repairs from repairs group by car_id;
 
-create or replace view v as select car_id from purchases;
-select * from v;
-
-select * from cars_purchases_num;
-select * from cars_repairs_num;
-
-select * from purchases;
-
-
-
 delimiter $$$
 create or replace function get_cars_sorted_by_repairs_purchases_ratio() returns varchar(100)
 begin
 
 declare result varchar(100);
 		select group_concat(concat(p.car_id, ';', coalesce(num_of_repairs, 0) / num_of_purchases) order by coalesce(num_of_repairs, 0) / num_of_purchases separator ',' ) into result
-		from cars_purchases_num  p left join cars_repairs_num r on p.car_id = r.car_id;
+		from cars_purchases_num p left join cars_repairs_num r on p.car_id = r.car_id;
 	return result;
 
 
@@ -148,11 +140,11 @@ insert into purchases values(8, 3, 1, 1, "2014-02-04", 553412.21);
 insert into purchases values(9, 3, 1, 1, "2014-02-04", 553412.21);
 
 
-insert into repairs values(1, 1, 1, 1, 1235, "2010-02-04", "2010-02-06", "broken", "fixed");
-insert into repairs values(2, 1, 1, 1, 1523, "2010-02-04", "2010-02-06", "please fix", "fixed");
-insert into repairs values(3, 1, 1, 1, 1523, "2010-02-04", "2010-02-06", "broken", "fixed");
+insert into repairs values(1, 1, 1, 1, null, 1235, "2010-02-04", "2010-02-06", "broken", "fixed");
+insert into repairs values(2, 1, 1, 1, null, 1523, "2010-02-04", "2010-02-06", "please fix", "fixed");
+/*insert into repairs values(3, 1, 1, 1, 1523, "2010-02-04", "2010-02-06", "broken", "fixed");
 insert into repairs values(4, 2, 1, 1, 1235, "2010-02-04", "2010-02-06", "broken", "fixed");
 insert into repairs values(5, 2, 1, 1, 3123, "2010-02-04", "2010-02-06", "broken", "fixed");
 insert into repairs values(6, 3, 1, 1, 13223, "2010-02-04", "2010-02-06", "broken", "fixed");
 insert into repairs values(7, 4, 1, 1, 1231, "2010-02-04", "2010-02-06", "broken", "fixed");
-
+*/

@@ -4,6 +4,7 @@ import com.jacekgry.cardealership.entity.Car;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface CarService {
 
@@ -22,5 +23,7 @@ public interface CarService {
     void decreasePrices(BigDecimal percentage);
 
     void increasePrices(BigDecimal percentage);
+
+    List<Map.Entry<Car, Double>> getCarsRankingByRepairsPurchasesRatio();
 //    void saveImg(CarImg carImg);
 }

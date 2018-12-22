@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
     List<Purchase> findAllByCustomerId(int customerId);
-    List<Purchase> findAll();
-    void deleteById(Integer id);
     List<Purchase> findAllByCarDealership(CarDealership carDealership);
 }
 

@@ -12,14 +12,14 @@
     <div th:replace="navbar::navbarinclude"></div>
 
     <div class="row">
-        <form class="form-inline " th:action="@{/cars/decrease}" th:method="post">
+        <form class="form-inline col-sm-4 " th:action="@{/cars/decrease}" th:method="post">
             <input class="form-control" type="text" placeholder="percentage" th:name="percentage">
             <input class="btn btn-outline-success" type="submit" value="Decrease prices">
         </form>
     </div>
 
     <div class="row">
-        <form class="form-inline float-left" th:action="@{/cars/increase}" th:method="post">
+        <form class="form-inline col-sm-4" th:action="@{/cars/increase}" th:method="post">
             <input class="form-control" type="text" placeholder="percentage" th:name="percentage">
             <input class="btn btn-outline-success" type="submit" value="Increase prices">
         </form>

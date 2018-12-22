@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div th:replace="navbar::navbarinclude"></div>
+        <div>
+            <table class="table table-striped" border="1">
+
+                <tr>
+                    <th>Rank</th>
+                    <th>Car</th>
+                    <th>Repairs/purchases ratio</th>
+                </tr>
+
+                <tr th:each="entry, iter: ${ranking}">
+                    <td th:utext="${iter.index + 1}"></td>
+                    <td><a th:href="${'/car/'+entry.key.id}" th:utext="${entry.key.name}"></a></td>
+                    <td th:utext="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -16,6 +16,7 @@ public class Repair {
     private int id;
 
     @ManyToOne(targetEntity = Car.class)
+    @JoinColumn(name = "car_id")
     private Car car;
 
     @ManyToOne(targetEntity = Customer.class)
@@ -25,6 +26,10 @@ public class Repair {
     @ManyToOne(targetEntity = CarDealership.class)
     @JoinColumn(name = "car_dealership_id")
     private CarDealership carDealership;
+
+    @ManyToOne(targetEntity = Purchase.class)
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
     @Column(name = "submission_date")
     @Temporal(value = TemporalType.DATE)

@@ -6,7 +6,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,6 +63,17 @@ public class CarServiceImpl implements CarService {
     @Override
     public void increasePrices(BigDecimal percentage) {
         carRepository.increasePrices(percentage);
+    }
+
+    @Override
+    public List<Map.Entry<Car, Double>> getCarsRankingByRepairsPurchasesRatio() {
+        String carsRanking = carRepository.carsByRepairsPurchasesRatio();
+        List<Map.Entry<Car, Double>> carsRatiosList = Arrays.stream(carsRanking.split(",")).map(entry -> {
+            String[] carRatioPair = entry.split(";");
+            Car car = carRepository.findById(Integer.parseInt(carRatioPair[0])).get();
+            return new AbstractMap.SimpleEntry<Car, Double>(car, Double.parseDouble(carRatioPair[1]));
+        }).collect(Collectors.toList());
+        return carsRatiosList;
     }
 
 //    @Override

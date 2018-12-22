@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -80,11 +81,18 @@ public class CarController {
         return "redirect:/cars";
     }
 
-    @PostMapping("cars/increase")
+    @PostMapping("/cars/increase")
     public String increasePrices(@RequestParam String percentage){
         BigDecimal increasePercentage = new BigDecimal(percentage);
         carService.increasePrices(increasePercentage);
         return "redirect:/cars";
+    }
+
+    @GetMapping("/cars/ranking")
+    public String carsRanking(Model model){
+        List<Map.Entry<Car, Double>> ranking = carService.getCarsRankingByRepairsPurchasesRatio();
+        model.addAttribute("ranking", ranking);
+        return "ranking";
     }
 
 
