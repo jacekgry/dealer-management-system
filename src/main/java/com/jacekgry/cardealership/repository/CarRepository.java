@@ -24,5 +24,6 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     @Query(nativeQuery = true, value = "SELECT get_cars_sorted_by_repairs_purchases_ratio()")
     String carsByRepairsPurchasesRatio();
 
+    List<Car> findByNameIgnoreCaseStartingWithAndPriceGreaterThanAndPriceLessThan(String name, BigDecimal minPrice, BigDecimal maxPrice);
 
 }

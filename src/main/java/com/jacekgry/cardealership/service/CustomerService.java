@@ -10,4 +10,5 @@ public interface CustomerService {
     Customer saveCustomer(Customer customer);
     Optional<Customer> findById(int id);
     void deleteById(int id);
+    List<Customer> findByNames(String firstName, String lastName);
 }

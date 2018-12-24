@@ -25,5 +25,7 @@ public interface CarService {
     void increasePrices(BigDecimal percentage);
 
     List<Map.Entry<Car, Double>> getCarsRankingByRepairsPurchasesRatio();
+
+    List<Car> findByNameAndPrice(String name, BigDecimal minPrice, BigDecimal maxPrice);
 //    void saveImg(CarImg carImg);
 }

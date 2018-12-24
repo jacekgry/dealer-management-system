@@ -15,14 +15,39 @@
         <div class="col-sm-3">
             <a th:href="${'/add/purchase'}" role="button" class="btn btn-success">New purchase</a>
         </div>
-        <div class="col-sm-9">
-            <form class="form-inline float-right" th:action="@{/purchases}" method="get">
-                <input class="form-control" type="search" th:name='phraseSearch' placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
     </div>
+
+    <form  th:action="@{/purchases}" method="get" style="margin-top: 40px">
+        <div class="row">
+            <label class="col-sm-2" col-form-label>Car's ID: </label>
+            <input class="form-control col-sm-2" type="search" th:name='carId' placeholder="Car's ID" th:value = "${carId}"
+                   aria-label="Search">
+            <label class="col-sm-2" col-form-label>Car's name: </label>
+            <input class="form-control col-sm-6" type="search" th:name='carName' placeholder="Car's name" th:value = "${carName}"
+                   aria-label="Search">
+        </div>
+        <div class="row">
+            <label class="col-sm-2" col-form-label>Car dealership's ID:</label>
+            <input class="form-control col-sm-2" type="search" th:name='cdId' placeholder="Car dealership's ID"
+                   aria-label="Search" th:value = "${cdId}">
+            <label class="col-sm-2" col-form-label>Car dealership's name:</label>
+            <input class="form-control col-sm-6" type="search" th:name='cdName' placeholder="Car dealership's name"
+                   aria-label="Search" th:value = "${cdName}">
+        </div>
+        <div class="row">
+            <label class="col-sm-2" col-form-label>Customer's ID:</label>
+            <input class="form-control col-sm-2" type="search" th:name='customerId' placeholder="Customer's ID"
+                   aria-label="Search" th:value = "${customerId}">
+            <label class="col-sm-2" col-form-label>Customer's name:</label>
+            <input class="form-control col-sm-3" type="search" th:name='customerFirstName' placeholder="Customer's first name"
+                   aria-label="Search" th:value = "${customerFirstName}">
+            <input class="form-control col-sm-3" type="search" th:name='customerLastName' placeholder="Customer's last name"
+                   aria-label="Search" th:value = "${customerLastName}">
+        </div>
+
+        <button class="btn btn-outline-success float-right col-sm-2" type="submit">Search</button>
+
+    </form>
 
 
     <div>
@@ -45,7 +70,7 @@
                 <td><a th:href="${'/purchase/' + purchase.id}"/>View</td>
                 <td>
                     <form method="POST" th:action="@{/delete/purchase}">
-                        <input type="hidden" name="id" th:value="${purchase.id}" />
+                        <input type="hidden" name="id" th:value="${purchase.id}"/>
                         <button type="submit" name="submit" value="value" class="link-button">Delete</button>
                     </form>
             </tr>

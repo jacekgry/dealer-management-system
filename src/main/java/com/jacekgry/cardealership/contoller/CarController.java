@@ -20,8 +20,8 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping(value = "/cars")
-    public String allCars(Model model, @RequestParam(value = "phraseSearch", required = false) String phraseSearch) {
-        List<Car> cars = carService.findByPhraseSearch(phraseSearch);
+    public String allCars(Model model, @RequestParam(value = "name", required = false, defaultValue = "") String name, @RequestParam(required = false, defaultValue = "0") BigDecimal minPrice, @RequestParam(required = false, defaultValue = "99999999") BigDecimal maxPrice) {
+        List<Car> cars = carService.findByNameAndPrice(name, minPrice, maxPrice);
         model.addAttribute("cars", cars);
         return "cars";
     }
@@ -75,21 +75,21 @@ public class CarController {
     }
 
     @PostMapping("/cars/decrease")
-    public String decreasePrices(@RequestParam String percentage){
+    public String decreasePrices(@RequestParam String percentage) {
         BigDecimal discountPercentage = new BigDecimal(percentage);
         carService.decreasePrices(discountPercentage);
         return "redirect:/cars";
     }
 
     @PostMapping("/cars/increase")
-    public String increasePrices(@RequestParam String percentage){
+    public String increasePrices(@RequestParam String percentage) {
         BigDecimal increasePercentage = new BigDecimal(percentage);
         carService.increasePrices(increasePercentage);
         return "redirect:/cars";
     }
 
     @GetMapping("/cars/ranking")
-    public String carsRanking(Model model){
+    public String carsRanking(Model model) {
         List<Map.Entry<Car, Double>> ranking = carService.getCarsRankingByRepairsPurchasesRatio();
         model.addAttribute("ranking", ranking);
         return "ranking";

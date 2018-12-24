@@ -29,9 +29,26 @@ public class PurchasesController {
     }
 
     @GetMapping("/purchases")
-    public String findPurchases(Model model, String phraseSearch){
-        List<Purchase> purchases = purchaseService.findByPhraseSearch(phraseSearch);
+    public String findPurchases(Model model,
+                                @RequestParam(required = false) Integer carId,
+                                @RequestParam(required = false) Integer customerId,
+                                @RequestParam(required = false) Integer cdId,
+                                @RequestParam(required = false, defaultValue = "") String carName,
+                                @RequestParam(required = false, defaultValue = "") String customerFirstName,
+                                @RequestParam(required = false, defaultValue = "") String customerLastName,
+                                @RequestParam(required = false, defaultValue = "") String cdName
+                                ){
+        List<Purchase> purchases = purchaseService.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName);
         model.addAttribute("purchases", purchases);
+
+        model.addAttribute("carId", carId);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("cdId", cdId);
+        model.addAttribute("carName", carName);
+        model.addAttribute("customerFirstName", customerFirstName);
+        model.addAttribute("customerLastName", customerLastName);
+        model.addAttribute("cdName", cdName);
+
         return "purchases";
     }
 

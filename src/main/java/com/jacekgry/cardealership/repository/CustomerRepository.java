@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<Customer> findByFirstName(String firstName);
-
     List<Customer> findByLastName(String lastName);
+    List<Customer> findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(String firstName, String lastName);
 }

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -18,8 +19,9 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping("/customers")
-    public String allCustomers(Model model) {
-        model.addAttribute("customers", customerService.findAll());
+    public String showCustomers(Model model, @RequestParam(required = false, defaultValue = "") String firstName, @RequestParam(required = false, defaultValue = "") String lastName) {
+        List<Customer> customers = customerService.findByNames(firstName, lastName);
+        model.addAttribute("customers", customers);
         return "customers";
     }
 
@@ -45,13 +47,13 @@ public class CustomerController {
     }
 
     @PostMapping("delete/customer")
-    public String deleteCustomer(@RequestParam Integer id){
+    public String deleteCustomer(@RequestParam Integer id) {
         customerService.deleteById(id);
         return "redirect:/customers";
     }
 
     @GetMapping("edit/customer/{id}")
-    public String editCustomer(@PathVariable Integer id, Model model){
+    public String editCustomer(@PathVariable Integer id, Model model) {
         Customer customer = customerService.findById(id).get();  //TODO
         model.addAttribute("customer", customer);
 

@@ -35,5 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(id);
     }
 
+    @Override
+    public List<Customer> findByNames(String firstName, String lastName) {
+
+        List<Customer> customers = customerRepository.findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(firstName, lastName);
+        return customers;
+    }
+
 
 }

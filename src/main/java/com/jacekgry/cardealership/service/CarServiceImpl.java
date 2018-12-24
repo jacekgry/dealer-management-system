@@ -76,6 +76,11 @@ public class CarServiceImpl implements CarService {
         return carsRatiosList;
     }
 
+    @Override
+    public List<Car> findByNameAndPrice(String name, BigDecimal minPrice, BigDecimal maxPrice) {
+        return carRepository.findByNameIgnoreCaseStartingWithAndPriceGreaterThanAndPriceLessThan(name, minPrice, maxPrice);
+    }
+
 //    @Override
 //    public void saveImg(CarImg carImg) {
 //        carImgRepository.save(carImg);
