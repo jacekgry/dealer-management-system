@@ -1,16 +1,16 @@
 package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Customer;
+import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,9 +26,11 @@ public class CustomerController {
     }
 
     @PostMapping("/add/customer")
-    public String addCustomerSubmit(@ModelAttribute Customer customer) {
+    public String addCustomerSubmit(@ModelAttribute @Valid Customer customer, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add_customer";
+        }
         customerService.saveCustomer(customer);
-
         return "redirect:/customers";
     }
 
@@ -39,39 +41,34 @@ public class CustomerController {
 
     @GetMapping("/customer/{id}")
     public String showCustomer(Model model, @PathVariable Integer id) {
-
-        Optional<Customer> customer = customerService.findById(id);
-        model.addAttribute("customer", customer.orElseThrow(() -> new CustomerNotFoundException("id - " + id)));
-
-        return "customer";
+        try {
+            Customer customer = customerService.findById(id);
+            model.addAttribute("customer", customer);
+            return "customer";
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
     @PostMapping("delete/customer")
     public String deleteCustomer(@RequestParam Integer id) {
-        customerService.deleteById(id);
-        return "redirect:/customers";
+        try {
+            customerService.deleteById(id);
+            return "redirect:/customers";
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
     @GetMapping("edit/customer/{id}")
     public String editCustomer(@PathVariable Integer id, Model model) {
-        Customer customer = customerService.findById(id).get();  //TODO
-        model.addAttribute("customer", customer);
-
-        return "add_customer";
-    }
-
-    @ExceptionHandler(CustomerNotFoundException.class)
-    public ModelAndView handleCustomerNotFoundException(CustomerNotFoundException e) {
-        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject()
-        return modelAndView;
-    }
-
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    class CustomerNotFoundException extends RuntimeException {
-        public CustomerNotFoundException(String msg) {
-            super(msg);
+        try {
+            Customer customer = customerService.findById(id);
+            model.addAttribute("customer", customer);
+            return "add_customer";
+        } catch (NotFoundException e) {
+            throw e;
         }
     }
+
 }

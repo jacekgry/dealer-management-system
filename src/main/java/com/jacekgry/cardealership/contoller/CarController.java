@@ -2,13 +2,16 @@ package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Car;
 import com.jacekgry.cardealership.entity.Fuel;
+import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.service.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -40,38 +43,36 @@ public class CarController {
     }
 
     @PostMapping("/add/car")
-    public String addCarSubmit(@ModelAttribute Car car, @RequestParam(required = false) MultipartFile[] imgs) {
-
+    public String addCarSubmit(@ModelAttribute @Valid Car car, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("fuels", Fuel.values());
+            return "add_car";
+        }
         carService.saveCar(car);
-
-//        for(MultipartFile mf : imgs){
-//            if(!mf.isEmpty()){
-//                try {
-//                    CarImg carImg = CarImg.builder().car(car).img(mf.getBytes()).build();
-//                    carService.saveImg(carImg);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-
         return "redirect:/cars";
     }
 
     @GetMapping("/edit/car/{id}")
     public String editCar(@PathVariable Integer id, Model model) {
-        Car car = carService.findById(id);
-        model.addAttribute("car", car);
-        model.addAttribute("fuels", Fuel.values());
-        return "add_car";
+        try {
+            Car car = carService.findById(id);
+            model.addAttribute("car", car);
+            model.addAttribute("fuels", Fuel.values());
+            return "add_car";
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
     @GetMapping("/car/{id}")
     public String showCar(@PathVariable Integer id, Model model) {
-        Car car = carService.findById(id);
-        model.addAttribute("car", car);
-//        model.addAttribute("numOfImgs", car.getImgs().size());
-        return "car";
+        try {
+            Car car = carService.findById(id);
+            model.addAttribute("car", car);
+            return "car";
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
     @PostMapping("/cars/decrease")

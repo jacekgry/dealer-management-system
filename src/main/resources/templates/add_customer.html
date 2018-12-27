@@ -12,11 +12,33 @@
     <div th:replace="navbar::navbarinclude"></div>
     <h1>Add customer</h1>
     <form action="#" th:action="@{/add/customer}" th:object="${customer}" method="post">
-        <p hidden="true">Id: <input hidden="true" type="text" th:field="*{id}"/></p>
-        <p>First name: <input type="text" th:field="*{firstName}"/></p>
-        <p>Last name: <input type="text" th:field="*{lastName}"/></p>
-        <p>Email: <input type="text" th:field="*{email}"/></p>
-        <p>Phone: <input type="text" th:field="*{phone}"/></p>
+
+        <input hidden="true" type="text" th:field="*{id}"/>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Name:</label>
+            <input type="text" class="form-control col-sm-6" th:field="*{firstName}">
+            <label class="col-sm-4" style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</label>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Last name:</label>
+            <input type="text" class="form-control col-sm-6" th:field="*{lastName}">
+            <label class="col-sm-4" style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</label>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Email:</label>
+            <input type="text" class="form-control col-sm-6" th:field="*{email}">
+            <label class="col-sm-4" style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</label>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Phone:</label>
+            <input type="text" class="form-control col-sm-2" th:field="*{phone}">
+            <label class="col-sm-8" style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone error</label>
+        </div>
+
+
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
 </div>

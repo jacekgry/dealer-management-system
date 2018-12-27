@@ -4,6 +4,7 @@ import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Stock;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CarDealershipService {
 

@@ -2,14 +2,17 @@ package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Stock;
+import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.service.CarDealershipService;
 import com.jacekgry.cardealership.service.PurchaseService;
 import com.jacekgry.cardealership.service.RepairService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -17,8 +20,6 @@ import java.util.List;
 public class CarDealershipController {
 
     private final CarDealershipService carDealerShipService;
-    private final PurchaseService purchaseService;
-    private final RepairService repairService;
 
     @GetMapping("/cardealerships")
     public String allCarDealerships(Model model) {
@@ -33,36 +34,29 @@ public class CarDealershipController {
     }
 
     @PostMapping("/add/cardealership")
-    public String addCarDealershipSubmit(@ModelAttribute CarDealership carDealership) {
+    public String addCarDealershipSubmit(@ModelAttribute @Valid CarDealership carDealership, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add_cardealership";
+        }
         carDealerShipService.save(carDealership);
         return "redirect:/cardealerships";
     }
 
     @GetMapping("/cardealership/{id}")
     public String showCarDealership(@PathVariable int id, Model model) {
-        CarDealership carDealership = carDealerShipService.findById(id);
-        model.addAttribute("cardealership", carDealership);
-        return "cardealership";
-    }
-
-    @GetMapping("/cardealership/purchases/{id}")
-    public String purchasesInCarDealership(@PathVariable int id, Model model) {
-        CarDealership carDealership = carDealerShipService.findById(id);
-        model.addAttribute("purchases", purchaseService.findAllByCardealership(carDealership));
-        return "purchases";
-    }
-
-    @GetMapping("/cardealership/repairs/{id}")
-    public String repairsInCarDealership(@PathVariable int id, Model model) {
-        CarDealership carDealership = carDealerShipService.findById(id);
-        model.addAttribute("repairs", repairService.findAllByCarDealership(carDealership));
-        return "repairs";
+        try {
+            CarDealership carDealership = carDealerShipService.findById(id);
+            model.addAttribute("cardealership", carDealership);
+            return "cardealership";
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
     @PostMapping("/delete/cardealership")
-    public String deleteCustomer(@RequestParam Integer id) {
+    public String deleteCustomer(@RequestParam Integer id, Model model) {
         carDealerShipService.deleteById(id);
-        return "redirect:/customers";
+        return "redirect:/cardealerships";
     }
 
     @GetMapping("/cardealership/stock/{id}")
@@ -74,12 +68,10 @@ public class CarDealershipController {
     }
 
     @PostMapping("/cardealership/updatestock")
-    public String updateStock(@RequestParam int cdId, @RequestParam int carId, @RequestParam int quantity){
+    public String updateStock(@RequestParam int cdId, @RequestParam int carId, @RequestParam int quantity) {
         Stock stock = carDealerShipService.findStockByCardealershipIdAndCarId(cdId, carId);
         stock.setAvailableNumber(quantity);
         carDealerShipService.saveStock(stock);
-
         return "redirect:/cardealership/stock/" + cdId;
     }
-
 }

@@ -1,15 +1,13 @@
 package com.jacekgry.cardealership.service;
 
 import com.jacekgry.cardealership.entity.Car;
+import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.repository.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +39,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car findById(int id) {
-        return carRepository.findById(id).get();
+        return carRepository.findById(id).orElseThrow(() -> new NotFoundException("Car", id));
     }
 
     @Override

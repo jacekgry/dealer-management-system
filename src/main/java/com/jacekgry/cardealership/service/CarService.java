@@ -1,10 +1,12 @@
 package com.jacekgry.cardealership.service;
 
 import com.jacekgry.cardealership.entity.Car;
+import com.jacekgry.cardealership.error.NotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface CarService {
 
@@ -16,7 +18,7 @@ public interface CarService {
 
     Car saveCar(Car car);
 
-    Car findById(int id);
+    Car findById(int id) throws NotFoundException;
 
     List<Car> findByPhraseSearch(String searchString);
 

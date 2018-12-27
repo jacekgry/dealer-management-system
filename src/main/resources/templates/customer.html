@@ -36,9 +36,9 @@
                 <div class="col-sm-3 col-sm-offset-3"><a href="/customers" role="button" class="btn btn-success">Back
                     to all
                     customers</a></div>
-                <div class="col-sm-3"><a th:href="${'/customer/purchases/' + customer.id}" role="button"
+                <div class="col-sm-3"><a th:href="${'/purchases?customerId=' + customer.id}" role="button"
                                          class="btn btn-success">Customer's purchases</a></div>
-                <div class="col-sm-3"><a th:href="${'/customer/repairs/' + customer.id}" role="button"
+                <div class="col-sm-3"><a th:href="${'/repairs?customerId=' + customer.id}" role="button"
                                          class="btn btn-success">Customer's repairs</a></div>
             </div>
 

@@ -2,9 +2,14 @@ package com.jacekgry.cardealership.service;
 
 import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Purchase;
+import com.jacekgry.cardealership.entity.Stock;
+import com.jacekgry.cardealership.error.NotFoundException;
+import com.jacekgry.cardealership.error.NotSufficientStockException;
 import com.jacekgry.cardealership.repository.PurchaseRepository;
+import com.jacekgry.cardealership.repository.StockRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,23 +19,11 @@ import java.util.stream.Collectors;
 public class PurchaseServiceImpl implements PurchaseService {
 
     private PurchaseRepository purchaseRepository;
+    private StockRepository stockRepository;
 
     @Override
     public List<Purchase> findCustomerPurchases(Integer id) {
         return purchaseRepository.findAllByCustomerId(id);
-    }
-
-    @Override
-    public List<Purchase> findByPhraseSearch(String searchString) {
-        List<Purchase> purchases = purchaseRepository.findAll();
-        if (searchString == null) return purchases;
-
-        final String searchStringLoweCaseTrimmed = searchString.toLowerCase().trim();
-        purchases = purchases.stream().filter(purchase -> {
-            return purchase.getCar().getName().toLowerCase().contains(searchStringLoweCaseTrimmed) ||
-                    purchase.getCustomer().toString().toLowerCase().trim().contains(searchStringLoweCaseTrimmed);
-        }).collect(Collectors.toList());
-        return purchases;
     }
 
     @Override
@@ -39,18 +32,23 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
+    @Transactional
     public void save(Purchase purchase) {
+        Stock stock = stockRepository.
+                findByStockIdCarIdAndStockIdCarDealershipId(purchase.getCar().getId(),
+                        purchase.getCarDealership().getId()).
+                orElseThrow(() -> new NotSufficientStockException(purchase.getCarDealership().getName(), purchase.getCar().getName()));
+        if (stock.getAvailableNumber() < 1) {
+            throw new NotSufficientStockException(purchase.getCarDealership().getName(), purchase.getCar().getName());
+        }
+        stock.setAvailableNumber(stock.getAvailableNumber() - 1);
+        stockRepository.save(stock);
         purchaseRepository.save(purchase);
     }
 
     @Override
     public Purchase findById(int id) {
-        return purchaseRepository.findById(id).get();
-    }
-
-    @Override
-    public List<Purchase> findAllByCardealership(CarDealership carDealership) {
-        return purchaseRepository.findAllByCarDealership(carDealership);
+        return purchaseRepository.findById(id).orElseThrow(() -> new NotFoundException("Purchase", id));
     }
 
     @Override

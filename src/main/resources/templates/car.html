@@ -49,9 +49,9 @@
                 <div class="col-sm-3 col-sm-offset-3"><a href="/cars" role="button" class="btn btn-success">Back
                     to all
                     cars</a></div>
-                <div class="col-sm-3"><a th:href="${'/car/purchases/' + car.id}" role="button"
+                <div class="col-sm-3"><a th:href="${'/purchases?carId=' + car.id}" role="button"
                                          class="btn btn-success">View this car's purchases</a></div>
-                <div class="col-sm-3"><a th:href="${'/car/repairs/' + car.id}" role="button"
+                <div class="col-sm-3"><a th:href="${'/repairs?carId=' + car.id}" role="button"
                                          class="btn btn-success">View this car's repairs</a></div>
             </div>
         </form>

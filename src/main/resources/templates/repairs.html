@@ -15,14 +15,39 @@
         <div class="col-sm-3">
             <a th:href="${'/add/repair'}" role="button" class="btn btn-success">New repair</a>
         </div>
-        <div class="col-sm-9">
-            <form class="form-inline float-right" th:action="@{/repairs}" method="get">
-                <input class="form-control" type="search" th:name='phraseSearch' placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
     </div>
+
+    <form  th:action="@{/repairs}" method="get" style="margin-top: 40px">
+        <div class="row">
+            <label class="col-sm-2" col-form-label>Car's ID: </label>
+            <input class="form-control col-sm-2 searchInput" type="search" th:name='carId' placeholder="Car's ID" th:value = "${carId}"
+                   aria-label="Search">
+            <label class="col-sm-2 searchInput" col-form-label>Car's name: </label>
+            <input class="form-control col-sm-6 searchInput" type="search" th:name='carName' placeholder="Car's name" th:value = "${carName}"
+                   aria-label="Search">
+        </div>
+        <div class="row">
+            <label class="col-sm-2" col-form-label>Car dealership's ID:</label>
+            <input class="form-control col-sm-2 searchInput" type="search" th:name='cdId' placeholder="Car dealership's ID"
+                   aria-label="Search" th:value = "${cdId}">
+            <label class="col-sm-2" col-form-label>Car dealership's name:</label>
+            <input class="form-control col-sm-6 searchInput" type="search" th:name='cdName' placeholder="Car dealership's name"
+                   aria-label="Search" th:value = "${cdName}">
+        </div>
+        <div class="row">
+            <label class="col-sm-2" col-form-label>Customer's ID:</label>
+            <input class="form-control col-sm-2 searchInput" type="search" th:name='customerId' placeholder="Customer's ID"
+                   aria-label="Search" th:value = "${customerId}">
+            <label class="col-sm-2" col-form-label>Customer's name:</label>
+            <input class="form-control col-sm-3 searchInput" type="search" th:name='customerFirstName' placeholder="Customer's first name"
+                   aria-label="Search" th:value = "${customerFirstName}">
+            <input class="form-control col-sm-3 searchInput" type="search" th:name='customerLastName' placeholder="Customer's last name"
+                   aria-label="Search" th:value = "${customerLastName}">
+        </div>
+
+        <button class="btn btn-outline-success float-right col-sm-2" type="submit">Search</button>
+        <button class="btn btn-outline-success float-right col-sm-2" onclick="resetSearch()">Reset</button>
+    </form>
 
 
     <div>
@@ -56,5 +81,15 @@
         </table>
     </div>
 </div>
+
+<script>
+    function resetSearch() {
+        var inputs = document.getElementsByClassName("searchInput")
+        for(i = 0; i < inputs.length; i++){
+            inputs[i].value = "";
+        }
+    }
+</script>
+
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.jacekgry.cardealership.service;
 
 import com.jacekgry.cardealership.entity.Customer;
+import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> findById(int id) {
-        return customerRepository.findById(id);
+    public Customer findById(int id) {
+        return customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer", id));
     }
 
     @Override

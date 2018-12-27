@@ -18,40 +18,40 @@
         <input type="hidden" th:field="*{id}">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="nameInput">Name:</label>
-            <input type="text" id="nameInput" class="form-control col-sm-10" th:field="*{name}">
+            <input type="text" id="nameInput" class="form-control col-sm-6" th:field="*{name}">
+            <label class="col-sm-4" style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</label>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="edInput">Engine displacement:</label>
             <input type="text" id="edInput" class="form-control col-sm-2" th:field="*{engineDisplacement}">
+            <label class="col-sm-8" style="color: red" th:if="${#fields.hasErrors('engineDisplacement')}" th:errors="*{engineDisplacement}">Engine displacement error</label>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="accInput">0-100 km/h acceleration::</label>
             <input type="text" id="accInput" class="form-control col-sm-2" th:field="*{time0to100kmph}">
+            <label class="col-sm-8" style="color: red" th:if="${#fields.hasErrors('time0to100kmph')}" th:errors="*{time0to100kmph}">Acceleration Error</label>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="priceInput">Price: </label>
             <input type="text" id="priceInput" class="form-control col-sm-2" th:field="*{price}">
+            <label class="col-sm-8" style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</label>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="descInput">Description: </label>
             <textarea type="text" id="descInput" class="form-control-lg col-sm-10" th:field="*{description}"></textarea>
+            <label class="col-sm-8" style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</label>
         </div>
 
         <div class="row">
-            <label class="col-sm-2">Fuel type: </label><select th:field="*{fuel}" class="form-control col-sm-3">
+            <label class="col-sm-2">Fuel type: </label>
+            <select th:field="*{fuel}" class="form-control col-sm-3">
             <option th:each="fuel: ${fuels}" th:value="${fuel}" th:text="${fuel}"/>
         </select>
         </div>
-
-        <!--<div class="form-group row">-->
-            <!--<label class="col-sm-2 col-form-label">Image: </label>-->
-            <!--<input type="file" name ="img">-->
-        <!--</div>-->
-
 
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
 

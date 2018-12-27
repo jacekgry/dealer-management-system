@@ -1,6 +1,7 @@
 package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Repair;
+import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.service.CarDealershipService;
 import com.jacekgry.cardealership.service.CarService;
 import com.jacekgry.cardealership.service.CustomerService;
@@ -8,10 +9,7 @@ import com.jacekgry.cardealership.service.RepairService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,22 +24,32 @@ public class RepairController {
     private CarService carService;
     private CustomerService customerService;
 
-    @GetMapping("/customer/repairs/{id}")
-    public String customerRepairs(Model model, @PathVariable int id){
-        List<Repair> repairs = repairService.findCustomerRepairs(id);
-        model.addAttribute("repairs", repairs);
-        return "repairs";
-    }
-
     @GetMapping("/repairs")
-    public String showRepairs(Model model){
-        List<Repair> repairs = repairService.findAll();
-        model.addAttribute("repairs", repairs);
+    public String showRepairs(Model model,
+                              @RequestParam(required = false) Integer carId,
+                              @RequestParam(required = false) Integer customerId,
+                              @RequestParam(required = false) Integer cdId,
+                              @RequestParam(required = false, defaultValue = "") String carName,
+                              @RequestParam(required = false, defaultValue = "") String customerFirstName,
+                              @RequestParam(required = false, defaultValue = "") String customerLastName,
+                              @RequestParam(required = false, defaultValue = "") String cdName
+    ) {
+        List<Repair> purchases = repairService.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName);
+        model.addAttribute("repairs", purchases);
+
+        model.addAttribute("carId", carId);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("cdId", cdId);
+        model.addAttribute("carName", carName);
+        model.addAttribute("customerFirstName", customerFirstName);
+        model.addAttribute("customerLastName", customerLastName);
+        model.addAttribute("cdName", cdName);
+
         return "repairs";
     }
 
     @GetMapping("/add/repair")
-    public String newRepairForm(Model model){
+    public String newRepairForm(Model model) {
         model.addAttribute("cardealerships", carDealershipService.findAll());
         model.addAttribute("cars", carService.findAll());
         model.addAttribute("customers", customerService.findAll());
@@ -53,25 +61,39 @@ public class RepairController {
     }
 
     @PostMapping("/add/repair")
-    public String newRepairSubmit(@ModelAttribute Repair repair){
+    public String newRepairSubmit(@ModelAttribute Repair repair) {
         repairService.save(repair);
         return "redirect:/repairs";
     }
 
     @GetMapping("/edit/repair/{id}")
-    public String editRepairForm(@PathVariable Integer id, Model model){
-        Repair repair = repairService.findById(id);
-        model.addAttribute("cardealerships", carDealershipService.findAll());
-        model.addAttribute("cars", carService.findAll());
-        model.addAttribute("customers", customerService.findAll());
-        model.addAttribute("repair", repair);
-        return "add_repair";
+    public String editRepairForm(@PathVariable Integer id, Model model) {
+        try {
+            Repair repair = repairService.findById(id);
+            model.addAttribute("cardealerships", carDealershipService.findAll());
+            model.addAttribute("cars", carService.findAll());
+            model.addAttribute("customers", customerService.findAll());
+            model.addAttribute("repair", repair);
+            return "add_repair";
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
     @GetMapping("/repair/{id}")
-    public String showRepair(@PathVariable Integer id, Model model){
-        Repair repair = repairService.findById(id);
-        model.addAttribute("repair", repair);
-        return "repair";
+    public String showRepair(@PathVariable Integer id, Model model) {
+        try {
+            Repair repair = repairService.findById(id);
+            model.addAttribute("repair", repair);
+            return "repair";
+        } catch (NotFoundException e) {
+            throw e;
+        }
+    }
+
+    @PostMapping("delete/repair")
+    public String deleteRepair(@RequestParam Integer id) {
+        repairService.deleteById(id);
+        return "redirect:/repairs";
     }
 }

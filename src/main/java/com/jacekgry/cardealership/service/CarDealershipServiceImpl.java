@@ -2,12 +2,16 @@ package com.jacekgry.cardealership.service;
 
 import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Stock;
+import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.repository.CarDealershipRepository;
 import com.jacekgry.cardealership.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +32,7 @@ public class CarDealershipServiceImpl implements CarDealershipService {
 
     @Override
     public CarDealership findById(int id) {
-        return carDealershipRepository.findById(id).get();
+        return carDealershipRepository.findById(id).orElseThrow(() -> new NotFoundException("Car dealership", id));
     }
 
     @Override

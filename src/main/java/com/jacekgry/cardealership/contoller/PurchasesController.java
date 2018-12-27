@@ -1,6 +1,8 @@
 package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Purchase;
+import com.jacekgry.cardealership.error.NotFoundException;
+import com.jacekgry.cardealership.error.NotSufficientStockException;
 import com.jacekgry.cardealership.service.CarDealershipService;
 import com.jacekgry.cardealership.service.CarService;
 import com.jacekgry.cardealership.service.CustomerService;
@@ -22,7 +24,7 @@ public class PurchasesController {
     private CustomerService customerService;
 
     @GetMapping("/customer/purchases/{id}")
-    public String customerPurchases(Model model, @PathVariable Integer id){
+    public String customerPurchases(Model model, @PathVariable Integer id) {
         List<Purchase> purchases = purchaseService.findCustomerPurchases(id);
         model.addAttribute("purchases", purchases);
         return "purchases";
@@ -37,7 +39,7 @@ public class PurchasesController {
                                 @RequestParam(required = false, defaultValue = "") String customerFirstName,
                                 @RequestParam(required = false, defaultValue = "") String customerLastName,
                                 @RequestParam(required = false, defaultValue = "") String cdName
-                                ){
+    ) {
         List<Purchase> purchases = purchaseService.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName);
         model.addAttribute("purchases", purchases);
 
@@ -53,13 +55,13 @@ public class PurchasesController {
     }
 
     @PostMapping("/delete/purchase")
-    public String deletePurchase(@RequestParam Integer id){
+    public String deletePurchase(@RequestParam Integer id) {
         purchaseService.deleteById(id);
         return "redirect:/purchases";
     }
 
     @GetMapping("/add/purchase")
-    public String newPurchaseForm(Model model){
+    public String newPurchaseForm(Model model) {
         model.addAttribute("cardealerships", carDealerShipService.findAll());
         model.addAttribute("cars", carService.findAll());
         model.addAttribute("customers", customerService.findAll());
@@ -68,17 +70,25 @@ public class PurchasesController {
     }
 
     @PostMapping("/add/purchase")
-    public String newPurchaseSubmit(@ModelAttribute Purchase purchase){
-        purchase.setPrice(purchase.getCar().getPrice());
-        purchaseService.save(purchase);
-        return "redirect:/purchases";
+    public String newPurchaseSubmit(@ModelAttribute Purchase purchase) {
+        try {
+            purchase.setPrice(purchase.getCar().getPrice());
+            purchaseService.save(purchase);
+            return "redirect:/purchases";
+        } catch (NotSufficientStockException e) {
+            throw e;
+        }
     }
 
     @GetMapping("/purchase/{id}")
-    public String showPurchaseDetails(@PathVariable int id, Model model){
-        Purchase purchase = purchaseService.findById(id);
-        model.addAttribute("purchase", purchase);
-        return "purchase";
+    public String showPurchaseDetails(@PathVariable int id, Model model) {
+        try {
+            Purchase purchase = purchaseService.findById(id);
+            model.addAttribute("purchase", purchase);
+            return "purchase";
+        } catch (NotFoundException e) {
+            throw e;
+        }
     }
 
 }
