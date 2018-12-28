@@ -30,5 +30,6 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
                                         @Param("customerLastName") String customerLastName,
                                         @Param("cdName") String cdName);
 
+    List<Purchase> findByCarId(Integer id);
 }
 

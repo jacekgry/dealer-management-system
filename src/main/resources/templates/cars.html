@@ -69,7 +69,12 @@
                 <td th:utext="${car.price}"></td>
                 <td><a th:href="${'/car/' + car.id}"/>View</td>
                 <td><a th:href="${'/edit/car/' + car.id}"/>Edit</td>
-                <td><a th:href="${'/delete/car/' + car.id}"/>Delete</td>
+                <td>
+                    <form method="POST" th:action="@{/delete/car}">
+                        <input type="hidden" name="id" th:value="${car.id}"/>
+                        <button type="submit" name="submit" value="value" class="link-button">Delete</button>
+                    </form>
+                </td>
             </tr>
         </table>
     </div>

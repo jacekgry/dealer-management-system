@@ -55,4 +55,14 @@ public class PurchaseServiceImpl implements PurchaseService {
     public List<Purchase> findBySearchCriteria(Integer carId, Integer customerId, Integer cdId, String carName, String customerFirstName, String customerLastName, String cdName) {
         return purchaseRepository.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName);
     }
+
+    @Override
+    public List<Purchase> findAll() {
+        return purchaseRepository.findAll();
+    }
+
+    @Override
+    public List<Purchase> findByCarId(Integer id) {
+        return purchaseRepository.findByCarId(id);
+    }
 }

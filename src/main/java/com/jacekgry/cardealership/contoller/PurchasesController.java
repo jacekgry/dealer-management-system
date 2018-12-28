@@ -1,5 +1,6 @@
 package com.jacekgry.cardealership.contoller;
 
+import com.jacekgry.cardealership.entity.Car;
 import com.jacekgry.cardealership.entity.Purchase;
 import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.error.NotSufficientStockException;
@@ -91,4 +92,10 @@ public class PurchasesController {
         }
     }
 
+    @GetMapping(value = "/car_purchases", produces = "application/json")
+    @ResponseBody
+    public List<Purchase> purchasesOfCar(@RequestParam Integer car) {
+        List<Purchase> purchases = purchaseService.findByCarId(car);
+        return purchases;
+    }
 }

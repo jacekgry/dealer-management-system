@@ -33,6 +33,17 @@ public class CarDealershipController {
         return "add_cardealership";
     }
 
+    @GetMapping("/edit/cardealership/{id}")
+    public String editCarDealershipForm(Model model, @PathVariable Integer id) {
+        try {
+            CarDealership carDealership = carDealerShipService.findById(id);
+            model.addAttribute("carDealership", carDealership);
+            return "add_cardealership";
+        } catch (NotFoundException e) {
+            throw e;
+        }
+    }
+
     @PostMapping("/add/cardealership")
     public String addCarDealershipSubmit(@ModelAttribute @Valid CarDealership carDealership, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -64,14 +75,13 @@ public class CarDealershipController {
         List<Stock> stock = carDealerShipService.getStockForCardealership(id);
         model.addAttribute("stock", stock);
         model.addAttribute("cdId", id);
+        model.addAttribute("stockObj", new Stock(carDealerShipService.findById(id)));
         return "stock";
     }
 
     @PostMapping("/cardealership/updatestock")
-    public String updateStock(@RequestParam int cdId, @RequestParam int carId, @RequestParam int quantity) {
-        Stock stock = carDealerShipService.findStockByCardealershipIdAndCarId(cdId, carId);
-        stock.setAvailableNumber(quantity);
-        carDealerShipService.saveStock(stock);
-        return "redirect:/cardealership/stock/" + cdId;
+    public String updateStock(@ModelAttribute @Valid Stock stockObj) {
+        carDealerShipService.saveStock(stockObj);
+        return "redirect:/cardealership/stock/" + stockObj.getCdId();
     }
 }

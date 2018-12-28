@@ -2,10 +2,7 @@ package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Repair;
 import com.jacekgry.cardealership.error.NotFoundException;
-import com.jacekgry.cardealership.service.CarDealershipService;
-import com.jacekgry.cardealership.service.CarService;
-import com.jacekgry.cardealership.service.CustomerService;
-import com.jacekgry.cardealership.service.RepairService;
+import com.jacekgry.cardealership.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +20,7 @@ public class RepairController {
     private CarDealershipService carDealershipService;
     private CarService carService;
     private CustomerService customerService;
+    private PurchaseService purchaseService;
 
     @GetMapping("/repairs")
     public String showRepairs(Model model,

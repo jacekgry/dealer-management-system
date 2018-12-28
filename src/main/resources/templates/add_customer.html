@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <div th:replace="navbar::navbarinclude"></div>
-    <h1>Add customer</h1>
+
     <form action="#" th:action="@{/add/customer}" th:object="${customer}" method="post">
 
         <input hidden="true" type="text" th:field="*{id}"/>

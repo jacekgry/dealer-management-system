@@ -22,6 +22,7 @@
                 <th>Name</th>
                 <th>City</th>
                 <th>Details</th>
+                <th>Edit</th>
                 <th>Delete</th>
             </tr>
 
@@ -29,6 +30,7 @@
                 <td th:utext="${cardealership.name}"></td>
                 <td th:utext="${cardealership.city}"></td>
                 <td><a th:href="${'/cardealership/' + cardealership.id}"/>View</td>
+                <td><a th:href="${'/edit/cardealership/' + cardealership.id}"/>Edit</td>
                 <td>
                     <form method="POST" th:action="@{/delete/cardealership}">
                         <input type="hidden" name="id" th:value="${cardealership.id}"/>

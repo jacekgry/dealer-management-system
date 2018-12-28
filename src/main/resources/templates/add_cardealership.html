@@ -12,7 +12,6 @@
 <body>
 <div class="container">
     <div th:replace="navbar::navbarinclude"></div>
-    <h1>Add cardealership</h1>
 
     <form action="#" th:action="@{/add/cardealership}" th:object="${carDealership}" method="post">
         <input type="hidden" th:field="*{id}">

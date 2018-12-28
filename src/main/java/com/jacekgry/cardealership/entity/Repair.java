@@ -1,14 +1,16 @@
 package com.jacekgry.cardealership.entity;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table (name = "repairs")
+@Table(name = "repairs")
 @Data
 public class Repair {
 
@@ -42,9 +44,11 @@ public class Repair {
     private Date endDate;
 
     @Column
+    @Range(min = 0)
+    @Digits(integer = 8, fraction = 2)
     private BigDecimal price;
 
-    @Column(name="customers_description")
+    @Column(name = "customers_description")
     private String customersDescription;
 
     @Column(name = "mechanics_description")

@@ -29,6 +29,10 @@
                 <div class="col-sm-10"><a th:href="${'/cardealership/' + repair.carDealership.id}" th:text="${repair.carDealership.name}" class="form-control-static"></a></div>
             </div>
             <div class="form-group row">
+                <label class="control-label col-sm-2">Purchase: </label>
+                <div th:if="${repair.purchase != null}" class="col-sm-10"><a th:href="${'/purchase/' + repair.purchase.id}" th:text="${repair.purchase.purchaseDate}" class="form-control-static"></a></div>
+            </div>
+            <div class="form-group row">
                 <label class="control-label col-sm-2">Submission date: </label>
                 <div class="col-sm-10"><p th:text="${repair.submissionDate}" class="form-control-static"></p></div>
             </div>

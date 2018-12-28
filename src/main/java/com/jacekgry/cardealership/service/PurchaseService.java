@@ -15,4 +15,8 @@ public interface PurchaseService {
     Purchase findById(int id);
 
     List<Purchase> findBySearchCriteria(Integer carId, Integer customerId, Integer cdId, String carName, String customerFirstName, String customerLastName, String cdName);
+
+    List<Purchase> findAll();
+
+    List<Purchase> findByCarId(Integer id);
 }

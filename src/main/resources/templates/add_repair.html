@@ -12,7 +12,6 @@
 <body>
 <div class="container">
     <div th:replace="navbar::navbarinclude"></div>
-    <h1>Add car</h1>
 
     <form action="#" th:action="@{/add/repair}" th:object="${repair}" method="post">
         <input type="hidden" th:field="*{id}">
@@ -29,7 +28,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Car:</label>
             <select th:field="*{car}"
-                    class="form-control col-sm-3">
+                    class="form-control col-sm-3" id="car-select">
                 <option th:each="car: ${cars}" th:value="${car.id}"
                         th:text="${car.name}"/>
             </select>
@@ -42,6 +41,13 @@
                         th:text="${cardealership.name}"/>
             </select>
         </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2" col-form-label>Purchase: </label>
+            <select th:field="*{purchase}" class="form-control col-sm-3" id="purchase-select">
+            </select>
+        </div>
+
 
         <div class="form-group row">
             <label class="col-sm-2" col-form-label>Submission date: </label>
@@ -72,5 +78,27 @@
     </form>
 
 </div>
+
+<script>
+    window.onload = function () {sendAjaxPurchasesRequest()};
+
+    $(document).ready(function() {
+        $("#car-select").change(function() {
+            sendAjaxPurchasesRequest();
+        });
+    });
+
+    function sendAjaxPurchasesRequest() {
+        var car = $("#car-select").val();
+        $.get( "/car_purchases?car=" + car, function( data ) {
+            $("#purchase-select").empty();
+            $("#purchase-select").append("<option value = ''></option>");
+            data.forEach(function(item, i) {
+                var option = "<option value = " + item.id + ">" + item.id +  "</option>";
+                $("#purchase-select").append(option);
+            });
+        });
+    };
+</script>
 </body>
 </html>

@@ -29,8 +29,8 @@ public class CarController {
         return "cars";
     }
 
-    @GetMapping("/delete/car/{id}")
-    public String deleteCar(@PathVariable int id) {
+    @PostMapping("/delete/car")
+    public String deleteCar(@RequestParam int id) {
         carService.deleteById(id);
         return "redirect:/cars";
     }
