@@ -13,7 +13,8 @@
     <div th:replace="navbar::navbarinclude"></div>
     <div class="row">
         <div class="col-sm-3">
-            <a th:href="${'/add/stock'}" role="button" class="btn btn-success">Add car</a>
+            <a th:href="${'/add/stock'}" role="button" class="btn btn-success" data-toggle="modal"
+               data-target="#addCarModal">Add car</a>
         </div>
 
     </div>
@@ -29,7 +30,7 @@
                 <td>
                     <div style="float: left" th:utext="${s.availableNumber}"></div>
                     <div style="float: right"><a href="#" class="btn btn-info btn-lg" data-toggle="modal"
-                                                 data-target="#exampleModal"
+                                                 data-target="#editCarModal"
                                                  th:attr="data-car=${s.stockId.car.name},data-carid=${s.stockId.car.id}, data-quantity=${s.availableNumber}"><span
                             class="glyphicon glyphicon-edit"></span></a></div>
                 </td>
@@ -41,12 +42,13 @@
 </div>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="editCarModal" tabindex="-1" role="dialog" aria-labelledby="editCarModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Set available number</h5>
+                <h5 class="modal-title" id="editCarModalLabel">Set available number</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -59,21 +61,54 @@
                     </div>
                     <div class="row form-group">
                         <label class="col-sm-2 col-form-label">Quantity:</label>
-                        <input type="text" id="quantity" class="col-sm-2 form-control" th:field="*{availableNumber}">
+                        <input type="number" min="0" id="quantity" class="col-sm-2 form-control" th:field="*{availableNumber}">
                         <input type="hidden" th:field="*{stockId.carDealership}">
                         <input type="hidden" id="carId" th:field="*{stockId.car}">
-
-
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <!--<a class="btn btn-primary" th:action="">Save</a>-->
                     <input type="submit" value="Submit"/>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
 
 
+
+<div class="modal fade" id="addCarModal" tabindex="-1" role="dialog" aria-labelledby="editCarModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCarModalLabel">Add car to stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form th:action="@{/cardealership/updatestock}" method="post" th:object="${stockObj}">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Car:</label>
+                        <select th:field="*{stockId.car}"
+                                class="form-control col-sm-3">
+                            <option th:each="car: ${cars}" th:value="${car.id}"
+                                    th:text="${car.name}"/>
+                        </select>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-2 col-form-label">Quantity:</label>
+                        <input type="number" min="1" class="col-sm-2 form-control" th:field="*{availableNumber}">
+                        <input type="hidden" th:field="*{stockId.carDealership}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" value="Submit"/>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -91,7 +126,7 @@
 
 <script>
 
-    $('#exampleModal').on('show.bs.modal', function (event) {
+    $('#editCarModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget)
         var car = button.data('car')
         var carId = button.data('carid')
@@ -103,6 +138,12 @@
         document.getElementById("carId").value = carId
         document.getElementById("quantity").value = quantity
     })
+
+    $('#addCarModal').on('show.bs.modal', function (event) {
+
+
+    })
+
 </script>
 
 

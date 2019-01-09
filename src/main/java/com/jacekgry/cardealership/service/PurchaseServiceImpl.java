@@ -7,6 +7,7 @@ import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.error.NotSufficientStockException;
 import com.jacekgry.cardealership.repository.PurchaseRepository;
 import com.jacekgry.cardealership.repository.StockRepository;
+import com.jacekgry.cardealership.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,5 +65,28 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public List<Purchase> findByCarId(Integer id) {
         return purchaseRepository.findByCarId(id);
+    }
+
+    @Override
+    public String purchasesAssociatedWithCar(int id) {
+        return purchasesListToStringOfIds(purchaseRepository.findAllByCarId(id));
+    }
+
+    @Override
+    public String purchasesAssociatedWithCarDealership(int id) {
+        return purchasesListToStringOfIds(purchaseRepository.findAllByCarDealershipId(id));
+    }
+
+    @Override
+    public String purchasesAssociatedWithCustomer(int id) {
+        return purchasesListToStringOfIds(purchaseRepository.findAllByCustomerId(id));
+    }
+
+    private String purchasesListToStringOfIds(List<Purchase> purchases) {
+        return "[" + purchases.stream()
+                .mapToInt(Purchase::getId)
+                .mapToObj(Integer::toString)
+                .reduce((a, b) -> String.join(",", a, b))
+                .orElse("") + "]";
     }
 }

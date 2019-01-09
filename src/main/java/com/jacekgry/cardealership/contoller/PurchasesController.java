@@ -1,19 +1,21 @@
 package com.jacekgry.cardealership.contoller;
 
-import com.jacekgry.cardealership.entity.Car;
 import com.jacekgry.cardealership.entity.Purchase;
+import com.jacekgry.cardealership.error.DeletionException;
 import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.error.NotSufficientStockException;
-import com.jacekgry.cardealership.service.CarDealershipService;
-import com.jacekgry.cardealership.service.CarService;
-import com.jacekgry.cardealership.service.CustomerService;
-import com.jacekgry.cardealership.service.PurchaseService;
+import com.jacekgry.cardealership.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -23,6 +25,7 @@ public class PurchasesController {
     private CarDealershipService carDealerShipService;
     private CarService carService;
     private CustomerService customerService;
+    private RepairService repairService;
 
     @GetMapping("/customer/purchases/{id}")
     public String customerPurchases(Model model, @PathVariable Integer id) {
@@ -56,9 +59,15 @@ public class PurchasesController {
     }
 
     @PostMapping("/delete/purchase")
-    public String deletePurchase(@RequestParam Integer id) {
-        purchaseService.deleteById(id);
-        return "redirect:/purchases";
+    public String deletePurchase(@RequestParam Integer id) throws Exception {
+        try {
+            purchaseService.deleteById(id);
+            return "redirect:/purchases";
+        } catch (DataIntegrityViolationException e) {
+            Map<String, String> associatedEntities = new HashMap<>();
+            associatedEntities.put("repairs", repairService.repairsAssociatedWithPurchase(id));
+            throw new DeletionException("purchase", id, associatedEntities);
+        }
     }
 
     @GetMapping("/add/purchase")
@@ -71,7 +80,13 @@ public class PurchasesController {
     }
 
     @PostMapping("/add/purchase")
-    public String newPurchaseSubmit(@ModelAttribute Purchase purchase) {
+    public String newPurchaseSubmit(@ModelAttribute @Valid Purchase purchase, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("cardealerships", carDealerShipService.findAll());
+            model.addAttribute("cars", carService.findAll());
+            model.addAttribute("customers", customerService.findAll());
+            return "add_purchase";
+        }
         try {
             purchase.setPrice(purchase.getCar().getPrice());
             purchaseService.save(purchase);

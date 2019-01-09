@@ -8,5 +8,4 @@ public interface StockService {
 
     List<Stock> fetchStock();
 
-
 }

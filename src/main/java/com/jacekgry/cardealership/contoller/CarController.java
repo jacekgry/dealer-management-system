@@ -2,17 +2,22 @@ package com.jacekgry.cardealership.contoller;
 
 import com.jacekgry.cardealership.entity.Car;
 import com.jacekgry.cardealership.entity.Fuel;
+import com.jacekgry.cardealership.error.DeletionException;
 import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.service.CarService;
+import com.jacekgry.cardealership.service.PurchaseService;
+import com.jacekgry.cardealership.service.RepairService;
+import com.jacekgry.cardealership.utils.Utils;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,18 +26,38 @@ import java.util.Map;
 public class CarController {
 
     private final CarService carService;
+    private final PurchaseService purchaseService;
+    private final RepairService repairService;
 
     @GetMapping(value = "/cars")
-    public String allCars(Model model, @RequestParam(value = "name", required = false, defaultValue = "") String name, @RequestParam(required = false, defaultValue = "0") BigDecimal minPrice, @RequestParam(required = false, defaultValue = "99999999") BigDecimal maxPrice) {
-        List<Car> cars = carService.findByNameAndPrice(name, minPrice, maxPrice);
+    public String allCars(Model model,
+                          @RequestParam(value = "name", required = false, defaultValue = "") String name,
+                          @RequestParam(required = false, defaultValue = "") String minPrice,
+                          @RequestParam(required = false, defaultValue = "") String maxPrice) {
+
+        BigDecimal min = Utils.parseBigDecimal(minPrice, "Minimum price");
+        BigDecimal max = Utils.parseBigDecimal(maxPrice, "Maximum price", true);
+
+        List<Car> cars = carService.findByNameAndPrice(name, min, max);
+
         model.addAttribute("cars", cars);
+        model.addAttribute("name", name);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
         return "cars";
     }
 
     @PostMapping("/delete/car")
-    public String deleteCar(@RequestParam int id) {
-        carService.deleteById(id);
-        return "redirect:/cars";
+    public String deleteCar(@RequestParam int id) throws Exception {
+        try {
+            carService.deleteById(id);
+            return "redirect:/cars";
+        } catch (DataIntegrityViolationException e) {
+            Map<String, String> associatedEntities = new HashMap<>();
+            associatedEntities.put("purchases", purchaseService.purchasesAssociatedWithCar(id));
+            associatedEntities.put("repairs", repairService.repairsAssociatedWithCar(id));
+            throw new DeletionException("car", id, associatedEntities);
+        }
     }
 
     @GetMapping("/add/car")
@@ -76,16 +101,37 @@ public class CarController {
     }
 
     @PostMapping("/cars/decrease")
-    public String decreasePrices(@RequestParam String percentage) {
-        BigDecimal discountPercentage = new BigDecimal(percentage);
-        carService.decreasePrices(discountPercentage);
+    public String decreasePrices(@RequestParam String percentage) throws Exception {
+        BigDecimal decreasePercentage;
+        try {
+            decreasePercentage = new BigDecimal(percentage);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Percentage must be a number");
+        }
+        if (decreasePercentage.compareTo(new BigDecimal(0)) > 0
+                && decreasePercentage.compareTo(new BigDecimal(100)) < 0) {
+            carService.decreasePrices(decreasePercentage);
+        } else {
+            throw new Exception("Percentage must be greater than 0 and less than 100");
+        }
         return "redirect:/cars";
     }
 
     @PostMapping("/cars/increase")
-    public String increasePrices(@RequestParam String percentage) {
-        BigDecimal increasePercentage = new BigDecimal(percentage);
-        carService.increasePrices(increasePercentage);
+    public String increasePrices(@RequestParam String percentage) throws Exception {
+        BigDecimal increasePercentage;
+        try {
+            increasePercentage = new BigDecimal(percentage);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Percentage must be a number");
+        }
+
+        if (increasePercentage.compareTo(new BigDecimal(0)) > 0
+                && increasePercentage.compareTo(new BigDecimal(999)) <= 0) {
+            carService.increasePrices(increasePercentage);
+        } else {
+            throw new Exception("Percentage must be greater than 0 and less than 1000");
+        }
         return "redirect:/cars";
     }
 
@@ -95,13 +141,4 @@ public class CarController {
         model.addAttribute("ranking", ranking);
         return "ranking";
     }
-
-
-//    @ResponseBody
-//    @GetMapping("/car/image/{id}/{which}")
-//    public byte[] getCarImages(@PathVariable Integer id, @PathVariable Integer which) {
-//        Car car = carService.findById(id);
-//        return car.getImgs().get(which).getImg();
-//    }
-
 }

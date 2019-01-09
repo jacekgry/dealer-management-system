@@ -19,4 +19,10 @@ public interface PurchaseService {
     List<Purchase> findAll();
 
     List<Purchase> findByCarId(Integer id);
+
+    String purchasesAssociatedWithCar(int id);
+
+    String purchasesAssociatedWithCarDealership(int id);
+
+    String purchasesAssociatedWithCustomer(int id);
 }

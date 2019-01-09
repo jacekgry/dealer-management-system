@@ -17,9 +17,9 @@
         <div class="col-sm-9">
             <form class="form-inline float-right" th:action="@{/customers}" method="get">
                 <input class="form-control" type="search" th:name='firstName' placeholder="first name"
-                       aria-label="Search">
+                       aria-label="Search" th:value = "${customerFirstName}">
                 <input class="form-control" type="search" th:name='lastName' placeholder="last name"
-                       aria-label="Search">
+                       aria-label="Search" th:value = "${customerLastName}">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>

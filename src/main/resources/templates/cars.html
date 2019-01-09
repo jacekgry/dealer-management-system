@@ -38,11 +38,11 @@
         </div>
         <div class="col-sm-9">
             <form class="form-inline float-right" th:action="@{/cars}" method="get">
-                <input class="form-control" type="search" th:name='name' placeholder="name"
+                <input class="form-control" type="search" th:name='name' placeholder="name" th:value="${name}"
                        aria-label="Search">
-                <input class="form-control" type="search" th:name='minPrice' placeholder="mininum price"
+                <input class="form-control" type="search" th:name='minPrice' placeholder="mininum price" th:value="${minPrice}"
                        aria-label="Search">
-                <input class="form-control" type="search" th:name='maxPrice'
+                <input class="form-control" type="search" th:name='maxPrice' th:value="${maxPrice}"
                        placeholder="maximum price"
                        aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>

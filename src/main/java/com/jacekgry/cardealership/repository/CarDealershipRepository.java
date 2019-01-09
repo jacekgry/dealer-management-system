@@ -10,5 +10,5 @@ import java.util.List;
 public interface CarDealershipRepository extends JpaRepository<CarDealership, Integer> {
 
     List<CarDealership> findAll();
-
+    List<CarDealership> findByNameIgnoreCaseStartingWithAndCityIgnoreCaseStartingWith(String name, String city);
 }

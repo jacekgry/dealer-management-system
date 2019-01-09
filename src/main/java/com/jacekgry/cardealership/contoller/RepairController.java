@@ -6,8 +6,10 @@ import com.jacekgry.cardealership.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +61,13 @@ public class RepairController {
     }
 
     @PostMapping("/add/repair")
-    public String newRepairSubmit(@ModelAttribute Repair repair) {
+    public String newRepairSubmit(@ModelAttribute @Valid Repair repair, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("cardealerships", carDealershipService.findAll());
+            model.addAttribute("cars", carService.findAll());
+            model.addAttribute("customers", customerService.findAll());
+            return "add_repair";
+        }
         repairService.save(repair);
         return "redirect:/repairs";
     }

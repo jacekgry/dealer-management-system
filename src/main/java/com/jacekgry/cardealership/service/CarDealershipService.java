@@ -13,6 +13,6 @@ public interface CarDealershipService {
     CarDealership findById(int id);
     void deleteById(int id);
     List<Stock> getStockForCardealership(int id);
-    Stock findStockByCardealershipIdAndCarId(int carDealershipId, int carId);
     void saveStock(Stock stock);
+    List<CarDealership> findByNameAndCity(String name, String city);
 }

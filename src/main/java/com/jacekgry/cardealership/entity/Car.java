@@ -1,9 +1,7 @@
 package com.jacekgry.cardealership.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -11,8 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -48,7 +44,4 @@ public class Car {
     @Range(min = 0)
     @Digits(integer = 8, fraction = 2)
     private BigDecimal price;
-
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "car")
-//    private List<CarImg> imgs;
 }

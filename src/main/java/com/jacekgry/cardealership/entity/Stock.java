@@ -28,6 +28,7 @@ public class Stock {
     public Integer getCdId() {
         return stockId.getCarDealership().getId();
     }
+    public Car getCar(){return stockId.getCar();}
 }
 
 @Embeddable

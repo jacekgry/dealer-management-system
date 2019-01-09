@@ -20,7 +20,7 @@
     <form  th:action="@{/repairs}" method="get" style="margin-top: 40px">
         <div class="row">
             <label class="col-sm-2" col-form-label>Car's ID: </label>
-            <input class="form-control col-sm-2 searchInput" type="search" th:name='carId' placeholder="Car's ID" th:value = "${carId}"
+            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='carId' placeholder="Car's ID" th:value = "${carId}"
                    aria-label="Search">
             <label class="col-sm-2 searchInput" col-form-label>Car's name: </label>
             <input class="form-control col-sm-6 searchInput" type="search" th:name='carName' placeholder="Car's name" th:value = "${carName}"
@@ -28,7 +28,7 @@
         </div>
         <div class="row">
             <label class="col-sm-2" col-form-label>Car dealership's ID:</label>
-            <input class="form-control col-sm-2 searchInput" type="search" th:name='cdId' placeholder="Car dealership's ID"
+            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='cdId' placeholder="Car dealership's ID"
                    aria-label="Search" th:value = "${cdId}">
             <label class="col-sm-2" col-form-label>Car dealership's name:</label>
             <input class="form-control col-sm-6 searchInput" type="search" th:name='cdName' placeholder="Car dealership's name"
@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <label class="col-sm-2" col-form-label>Customer's ID:</label>
-            <input class="form-control col-sm-2 searchInput" type="search" th:name='customerId' placeholder="Customer's ID"
+            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='customerId' placeholder="Customer's ID"
                    aria-label="Search" th:value = "${customerId}">
             <label class="col-sm-2" col-form-label>Customer's name:</label>
             <input class="form-control col-sm-3 searchInput" type="search" th:name='customerFirstName' placeholder="Customer's first name"
@@ -52,7 +52,6 @@
 
     <div>
         <table class="table table-striped" border="1">
-
             <tr>
                 <th>Id</th>
                 <th>Customer</th>

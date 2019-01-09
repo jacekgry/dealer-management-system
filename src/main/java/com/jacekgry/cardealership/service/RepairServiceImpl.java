@@ -1,6 +1,7 @@
 package com.jacekgry.cardealership.service;
 
 import com.jacekgry.cardealership.entity.CarDealership;
+import com.jacekgry.cardealership.entity.Purchase;
 import com.jacekgry.cardealership.entity.Repair;
 import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.repository.RepairRepository;
@@ -38,5 +39,33 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public void deleteById(Integer id) {
         repairRepository.deleteById(id);
+    }
+
+    @Override
+    public String repairsAssociatedWithCar(int id) {
+        return repairsListToStringOfIds(repairRepository.findAllByCarId(id));
+    }
+
+    @Override
+    public String repairsAssociatedWithCarDealership(int id) {
+        return repairsListToStringOfIds(repairRepository.findAllByCarDealershipId(id));
+    }
+
+    @Override
+    public String repairsAssociatedWithCustomer(int id) {
+        return repairsListToStringOfIds(repairRepository.findAllByCustomerId(id));
+    }
+
+    @Override
+    public String repairsAssociatedWithPurchase(int id) {
+        return repairsListToStringOfIds(repairRepository.findAllByPurchaseId(id));
+    }
+
+    private String repairsListToStringOfIds(List<Repair> repairs) {
+        return "[" + repairs.stream()
+                .mapToInt(Repair::getId)
+                .mapToObj(Integer::toString)
+                .reduce((a, b) -> String.join(",", a, b))
+                .orElse("") + "]";
     }
 }

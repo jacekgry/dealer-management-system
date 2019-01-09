@@ -46,12 +46,17 @@ public class CarDealershipServiceImpl implements CarDealershipService {
     }
 
     @Override
-    public Stock findStockByCardealershipIdAndCarId(int carDealershipId, int carId) {
-        return stockRepository.findByStockIdCarIdAndStockIdCarDealershipId(carId, carDealershipId).get();
+    public void saveStock(Stock stock) {
+        if (stock.getAvailableNumber() > 0) {
+            stockRepository.save(stock);
+        }
+        if (stock.getAvailableNumber() == 0) {
+            stockRepository.delete(stock);
+        }
     }
 
     @Override
-    public void saveStock(Stock stock) {
-        stockRepository.save(stock);
+    public List<CarDealership> findByNameAndCity(String name, String city) {
+        return carDealershipRepository.findByNameIgnoreCaseStartingWithAndCityIgnoreCaseStartingWith(name, city);
     }
 }

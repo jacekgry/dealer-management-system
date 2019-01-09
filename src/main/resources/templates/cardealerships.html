@@ -14,6 +14,15 @@
         <div class="col-sm-3">
             <a th:href="${'/add/cardealership'}" role="button" class="btn btn-success">Add cardealership</a>
         </div>
+        <div class="col-sm-9">
+            <form class="form-inline float-right" th:action="@{/cardealerships}" method="get">
+                <input class="form-control" type="search" th:name='name' placeholder="name" th:value="${name}"
+                       aria-label="Search">
+                <input class="form-control" type="search" th:name='city' placeholder="city" th:value="${city}"
+                       aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
     </div>
     <div>
         <table class="table table-striped" border="1">

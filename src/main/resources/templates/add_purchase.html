@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2" col-form-label>Where did he buy it: </label>
+            <label class="col-sm-2" col-form-label>Car dealership: </label>
             <select th:field="*{carDealership}" class="form-control col-sm-3">
                 <option th:each="cardealership: ${cardealerships}" th:value="${cardealership.id}"
                         th:text="${cardealership.name}"/>
@@ -45,6 +45,7 @@
         <div class="form-group row">
             <label class="col-sm-2" col-form-label>Date: </label>
             <input type="date" class="form-control col-sm-2" th:field="*{purchaseDate}">
+            <label class="col-sm-8" style="color: red" th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}">Date Error</label>
         </div>
 
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>

@@ -3,6 +3,7 @@ package com.jacekgry.cardealership.repository;
 
 import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Purchase;
+import com.jacekgry.cardealership.entity.Repair;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +12,8 @@ import java.util.List;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
     List<Purchase> findAllByCustomerId(int customerId);
-
-    List<Purchase> findAllByCarDealership(CarDealership carDealership);
+    List<Purchase> findAllByCarDealershipId(int id);
+    List<Purchase> findAllByCarId(int id);
 
     @Query(value = "SELECT p FROM Purchase p WHERE (:carId is null or p.car.id = :carId)" +
             "and (:cdId is null or p.carDealership.id = :cdId) " +
