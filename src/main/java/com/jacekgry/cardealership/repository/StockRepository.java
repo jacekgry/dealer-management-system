@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StockRepository extends JpaRepository<Stock, Integer> {
-
     List<Stock> findAllByStockIdCarDealershipId(int carDealerShipId);
-
-    List<Stock> findAllByStockIdCarId(int carId);
     Optional<Stock> findByStockIdCarIdAndStockIdCarDealershipId(int carId, int carDealershipId);
-
 }

@@ -4,10 +4,8 @@ import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Stock;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CarDealershipService {
-
     List<CarDealership> findAll();
     CarDealership save(CarDealership carDealership);
     CarDealership findById(int id);

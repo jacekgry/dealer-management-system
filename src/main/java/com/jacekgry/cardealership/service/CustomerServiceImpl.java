@@ -42,6 +42,4 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = customerRepository.findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(firstName, lastName);
         return customers;
     }
-
-
 }

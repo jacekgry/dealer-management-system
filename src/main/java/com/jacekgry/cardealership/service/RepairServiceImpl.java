@@ -1,7 +1,5 @@
 package com.jacekgry.cardealership.service;
 
-import com.jacekgry.cardealership.entity.CarDealership;
-import com.jacekgry.cardealership.entity.Purchase;
 import com.jacekgry.cardealership.entity.Repair;
 import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.repository.RepairRepository;

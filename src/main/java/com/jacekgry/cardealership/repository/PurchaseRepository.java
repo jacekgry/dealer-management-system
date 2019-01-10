@@ -1,9 +1,7 @@
 package com.jacekgry.cardealership.repository;
 
 
-import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Purchase;
-import com.jacekgry.cardealership.entity.Repair;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

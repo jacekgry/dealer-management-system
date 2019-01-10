@@ -25,12 +25,4 @@ public class Utils {
         }
         return parsed;
     }
-
-    public static String joinStringsWithDelimiter(Stream<String> stringsStream, String delimiter) {
-        return stringsStream.reduce((s1, s2) -> String.join(delimiter, s1, s2)).orElse("");
-    }
-//
-//    public static String joinStringsWithDelimiter(List<String> strings, String delimiter) {
-//        return stringsStream.reduce((s1, s2) -> String.join(delimiter, s1, s2)).orElse("");
-//    }
 }

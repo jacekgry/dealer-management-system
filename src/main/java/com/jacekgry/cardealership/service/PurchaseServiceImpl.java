@@ -1,19 +1,16 @@
 package com.jacekgry.cardealership.service;
 
-import com.jacekgry.cardealership.entity.CarDealership;
 import com.jacekgry.cardealership.entity.Purchase;
 import com.jacekgry.cardealership.entity.Stock;
 import com.jacekgry.cardealership.error.NotFoundException;
 import com.jacekgry.cardealership.error.NotSufficientStockException;
 import com.jacekgry.cardealership.repository.PurchaseRepository;
 import com.jacekgry.cardealership.repository.StockRepository;
-import com.jacekgry.cardealership.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service

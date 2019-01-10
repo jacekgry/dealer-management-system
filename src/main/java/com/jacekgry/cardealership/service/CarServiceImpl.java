@@ -20,7 +20,6 @@ public class CarServiceImpl implements CarService {
 
     private CarRepository carRepository;
     private StockRepository stockRepository;
-//    private CarImgRepository carImgRepository;
 
     @Override
     public List<Car> findAllByName(String name) {
