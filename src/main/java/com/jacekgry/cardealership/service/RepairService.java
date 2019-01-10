@@ -11,7 +11,7 @@ public interface RepairService {
 
     Repair findById(Integer id);
 
-    List<Repair> findBySearchCriteria(Integer carId, Integer customerId, Integer cdId, String carName, String customerFirstName, String customerLastName, String cdName);
+    List<Repair> findBySearchCriteria(Integer carId, Integer customerId, Integer cdId, String carName, String customerFirstName, String customerLastName, String cdName, String state);
 
     void deleteById(Integer id);
 
@@ -22,4 +22,5 @@ public interface RepairService {
     String repairsAssociatedWithCustomer(int id);
 
     String repairsAssociatedWithPurchase(int id);
+
 }

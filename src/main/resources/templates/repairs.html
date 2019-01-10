@@ -17,32 +17,44 @@
         </div>
     </div>
 
-    <form  th:action="@{/repairs}" method="get" style="margin-top: 40px">
+    <form th:action="@{/repairs}" method="get" style="margin-top: 40px">
         <div class="row">
             <label class="col-sm-2" col-form-label>Car's ID: </label>
-            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='carId' placeholder="Car's ID" th:value = "${carId}"
+            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='carId'
+                   placeholder="Car's ID" th:value="${carId}"
                    aria-label="Search">
             <label class="col-sm-2 searchInput" col-form-label>Car's name: </label>
-            <input class="form-control col-sm-6 searchInput" type="search" th:name='carName' placeholder="Car's name" th:value = "${carName}"
+            <input class="form-control col-sm-6 searchInput" type="search" th:name='carName' placeholder="Car's name"
+                   th:value="${carName}"
                    aria-label="Search">
         </div>
         <div class="row">
             <label class="col-sm-2" col-form-label>Car dealership's ID:</label>
-            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='cdId' placeholder="Car dealership's ID"
-                   aria-label="Search" th:value = "${cdId}">
+            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='cdId'
+                   placeholder="Car dealership's ID"
+                   aria-label="Search" th:value="${cdId}">
             <label class="col-sm-2" col-form-label>Car dealership's name:</label>
-            <input class="form-control col-sm-6 searchInput" type="search" th:name='cdName' placeholder="Car dealership's name"
-                   aria-label="Search" th:value = "${cdName}">
+            <input class="form-control col-sm-6 searchInput" type="search" th:name='cdName'
+                   placeholder="Car dealership's name"
+                   aria-label="Search" th:value="${cdName}">
         </div>
         <div class="row">
             <label class="col-sm-2" col-form-label>Customer's ID:</label>
-            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='customerId' placeholder="Customer's ID"
-                   aria-label="Search" th:value = "${customerId}">
+            <input class="form-control col-sm-2 searchInput" type="number" min="0" th:name='customerId'
+                   placeholder="Customer's ID"
+                   aria-label="Search" th:value="${customerId}">
             <label class="col-sm-2" col-form-label>Customer's name:</label>
-            <input class="form-control col-sm-3 searchInput" type="search" th:name='customerFirstName' placeholder="Customer's first name"
-                   aria-label="Search" th:value = "${customerFirstName}">
-            <input class="form-control col-sm-3 searchInput" type="search" th:name='customerLastName' placeholder="Customer's last name"
-                   aria-label="Search" th:value = "${customerLastName}">
+            <input class="form-control col-sm-3 searchInput" type="search" th:name='customerFirstName'
+                   placeholder="Customer's first name"
+                   aria-label="Search" th:value="${customerFirstName}">
+            <input class="form-control col-sm-3 searchInput" type="search" th:name='customerLastName'
+                   placeholder="Customer's last name"
+                   aria-label="Search" th:value="${customerLastName}">
+        </div>
+        <div>
+            <input width="5%" type="radio" th:name="${'state'}" th:text="All" th:value="all" th:checked="${state} == 'all'"/>
+            <input width="5%" type="radio" th:name="${'state'}" th:text="Pending" th:value="pending" th:checked="${state} == 'pending'"/>
+            <input width="5%" type="radio" th:name="${'state'}" th:text="Ended" th:value="ended" th:checked="${state} == 'ended'"/>
         </div>
 
         <button class="btn btn-outline-success float-right col-sm-2" type="submit">Search</button>
@@ -73,7 +85,7 @@
                 <td><a th:href="${'/edit/repair/' + repair.id}"/>Edit</td>
                 <td>
                     <form method="POST" th:action="@{/delete/repair}">
-                        <input type="hidden" name="id" th:value="${repair.id}" />
+                        <input type="hidden" name="id" th:value="${repair.id}"/>
                         <button type="submit" name="submit" value="value" class="link-button">Delete</button>
                     </form>
             </tr>
@@ -84,7 +96,7 @@
 <script>
     function resetSearch() {
         var inputs = document.getElementsByClassName("searchInput")
-        for(i = 0; i < inputs.length; i++){
+        for (i = 0; i < inputs.length; i++) {
             inputs[i].value = "";
         }
     }

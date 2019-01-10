@@ -22,7 +22,6 @@ public class RepairController {
     private CarDealershipService carDealershipService;
     private CarService carService;
     private CustomerService customerService;
-    private PurchaseService purchaseService;
 
     @GetMapping("/repairs")
     public String showRepairs(Model model,
@@ -32,9 +31,10 @@ public class RepairController {
                               @RequestParam(required = false, defaultValue = "") String carName,
                               @RequestParam(required = false, defaultValue = "") String customerFirstName,
                               @RequestParam(required = false, defaultValue = "") String customerLastName,
-                              @RequestParam(required = false, defaultValue = "") String cdName
+                              @RequestParam(required = false, defaultValue = "") String cdName,
+                              @RequestParam(required = false, defaultValue = "all") String state
     ) {
-        List<Repair> purchases = repairService.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName);
+        List<Repair> purchases = repairService.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName, state);
         model.addAttribute("repairs", purchases);
 
         model.addAttribute("carId", carId);
@@ -44,6 +44,7 @@ public class RepairController {
         model.addAttribute("customerFirstName", customerFirstName);
         model.addAttribute("customerLastName", customerLastName);
         model.addAttribute("cdName", cdName);
+        model.addAttribute("state", state);
 
         return "repairs";
     }

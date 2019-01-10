@@ -7,12 +7,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class RepairServiceImpl implements RepairService {
 
     private RepairRepository repairRepository;
+
+    private final String PENDING = "pending";
+    private final String ENDED = "ended";
 
     @Override
     public List<Repair> findAll() {
@@ -30,8 +34,15 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public List<Repair> findBySearchCriteria(Integer carId, Integer customerId, Integer cdId, String carName, String customerFirstName, String customerLastName, String cdName) {
-        return repairRepository.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName);
+    public List<Repair> findBySearchCriteria(Integer carId, Integer customerId, Integer cdId, String carName, String customerFirstName, String customerLastName, String cdName, String state) {
+        List<Repair> repairs = repairRepository.findBySearchCriteria(carId, customerId, cdId, carName, customerFirstName, customerLastName, cdName);
+        if(ENDED.equals(state)){
+            repairs = repairs.stream().filter(r -> null != r.getEndDate()).collect(Collectors.toList());
+        }
+        else if (PENDING.equals(state)){
+            repairs = repairs.stream().filter(r -> null == r.getEndDate()).collect(Collectors.toList());
+        }
+        return repairs;
     }
 
     @Override
